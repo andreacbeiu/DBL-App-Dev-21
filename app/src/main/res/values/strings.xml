@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">UI_screens</string>
+    <string name="app_title">BookIt</string>
+    <string name="mainpage_helptext">How are you using BookIt?</string>
+    <string name="string_customer">CUSTOMER</string>
+    <string name="string_restuarant">RESTAURANT</string>
+    <string name="custlogin_title">Log in as a customer</string>
+    <string name="custlogin_username">Username</string>
+    <string name="custlogin_password">Password</string>
+    <string name="string_login">LOG IN</string>
+    <string name="custlogin_noacc">Don\'t have an account yet?</string>
+    <string name="string_makeone">MAKE ONE</string>
+    <string name="restlogin_title">Log in as a restaurant</string>
+    <string name="restlogin_noacc">Don\'t have an account yet? Contact your employer or</string>
+    <string name="restlogin_register">Register your restaurant</string>
+</resources>
