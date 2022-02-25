@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UI_screens</string>
+    <string name="app_name">BookIt</string>
     <string name="app_title">BookIt</string>
     <string name="mainpage_helptext">How are you using BookIt?</string>
     <string name="string_customer">CUSTOMER</string>
