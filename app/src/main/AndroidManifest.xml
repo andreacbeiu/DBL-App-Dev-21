@@ -20,6 +20,9 @@
             android:name=".CustomerLoginActivity"
             android:exported="false" />
         <activity
+            android:name=".restaurant_list.RestaurantListActivity"
+            android:exported="false"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true" >
             <intent-filter>
