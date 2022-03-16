@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UI_screens">
         <activity
+            android:name=".CustomerSignup"
+            android:exported="false" />
+        <activity
             android:name=".RestaurantLoginActivity"
             android:exported="false" />
         <activity

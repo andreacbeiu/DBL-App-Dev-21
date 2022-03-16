@@ -6,20 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class CustomerLoginActivity extends AppCompatActivity {
+public class CustomerSignup extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_login);
+        setContentView(R.layout.activity_customer_signup);
     }
 
-    public void CustomerSignup(View view) {
+    public void customerLogin(View view) {
         //sets the intent of the function: changing the activity
-        Intent intent = new Intent(this, CustomerSignup.class);
+        Intent intent = new Intent(this, CustomerLoginActivity.class);
         //starts the activity associated with the intent
         startActivity(intent);
     }
-
-
 }
