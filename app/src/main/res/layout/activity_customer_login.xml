@@ -88,6 +88,7 @@
         android:layout_marginTop="16dp"
         android:onClick="CustomerSignup"
         android:text="@string/string_makeone"
+        android:onClick="openRegistration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />

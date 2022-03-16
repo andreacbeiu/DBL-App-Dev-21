@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.ui_screens.ui.login.RegistrationActivity;
+
 public class CustomerLoginActivity extends AppCompatActivity {
 
     @Override
@@ -14,9 +16,9 @@ public class CustomerLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customer_login);
     }
 
-    public void CustomerSignup(View view) {
+    public void openRegistration(View view) {
         //sets the intent of the function: changing the activity
-        Intent intent = new Intent(this, CustomerSignup.class);
+        Intent intent = new Intent(this, RegistrationActivity.class);
         //starts the activity associated with the intent
         startActivity(intent);
     }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "667961608821",
+    "project_id": "bookit-11aa4",
+    "storage_bucket": "bookit-11aa4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667961608821:android:bfd11bbed0cd16fc58863c",
+        "android_client_info": {
+          "package_name": "com.example.ui_screens"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667961608821-th5kto56gqul8dmope5eq57vl71a9pau.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1bOAu7xKDpgEmuvJPnZRNuo2OIMeXZ5s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "667961608821-th5kto56gqul8dmope5eq57vl71a9pau.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
