@@ -46,7 +46,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             List<Table> tables = new ArrayList<>();
 
-                            for(Map<String, Object> entry : (ArrayList<Map<String, Object>>) document.getData().get("tables")){
+                            for(Map<String, Object> entry : (ArrayList<Map<String, Object>>) document.getData().get("tables")) {
                                 Table table = new Table(((Long) entry.get("seats")).intValue());
                                 tables.add(table);
                             }
