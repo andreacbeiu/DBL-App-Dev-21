@@ -14,9 +14,6 @@
             android:exported="false"
             android:label="@string/title_activity_registration" />
         <activity
-            android:name=".CustomerSignup"
-            android:exported="false" />
-        <activity
             android:name=".RestaurantLoginActivity"
             android:exported="false" />
         <activity
