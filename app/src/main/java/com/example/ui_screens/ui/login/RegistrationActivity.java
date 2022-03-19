@@ -1,13 +1,18 @@
 package  com.example.ui_screens.ui.login;
 
 import android.app.Activity;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
@@ -18,15 +23,26 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ui_screens.CustomerLoginActivity;
 import com.example.ui_screens.R;
 import com.example.ui_screens.ui.login.LoginViewModel;
 import com.example.ui_screens.ui.login.LoginViewModelFactory;
 import com.example.ui_screens.databinding.ActivityRegistrationBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class RegistrationActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
-private ActivityRegistrationBinding binding;
+    private ActivityRegistrationBinding binding;
+    final EditText usernameEditText = binding.username;
+    final EditText passwordEditText = binding.password;
+    final Button loginButton = binding.login;
+    final ProgressBar loadingProgressBar = binding.loading;
+    FirebaseAuth mAuth;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,10 +54,13 @@ private ActivityRegistrationBinding binding;
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = binding.username;
-        final EditText passwordEditText = binding.password;
-        final Button loginButton = binding.login;
-        final ProgressBar loadingProgressBar = binding.loading;
+
+        mAuth = FirebaseAuth.getInstance();
+
+        loginButton.setOnClickListener(view -> {
+            createUser();
+        });
+
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -129,4 +148,38 @@ private ActivityRegistrationBinding binding;
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
+
+    private void createUser() {
+        String email = usernameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+
+        if (TextUtils.isEmpty(email)) {
+            usernameEditText.setError("Email Cannot Be Empty");
+            usernameEditText.requestFocus();
+        } else if (TextUtils.isEmpty(password)) {
+            passwordEditText.setError("Email Cannot Be Empty");
+            passwordEditText.requestFocus();
+
+        } else {
+            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(RegistrationActivity.this, "User Registered Successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(RegistrationActivity.this, CustomerLoginActivity.class));
+                    } else {
+                        Toast.makeText(RegistrationActivity.this, "Registration Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
+    }
+
+
+
+
+
+
+
 }
