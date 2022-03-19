@@ -20,7 +20,14 @@ import java.util.List;
 import java.util.Map;
 
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.ViewHolder> {
+    public interface OnItemClickListener {
+        void onItemClick(Restaurant restaurants);
+    }
+
+    //array for holding restaurant names
     private List<Restaurant> restaurants = new ArrayList<>();
+    private final OnItemClickListener listener = null;
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textView;
