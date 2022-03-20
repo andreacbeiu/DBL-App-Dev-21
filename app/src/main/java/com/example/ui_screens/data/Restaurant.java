@@ -6,11 +6,15 @@ public class Restaurant {
     private String id;
     private String name;
     private List<Table> tables;
+    private String description;
+    private float rating;
 
-    public Restaurant(String id, String name, List<Table> tables){
+    public Restaurant(String id, String name, String description, float rating, List<Table> tables){
         this.id = id;
         this.name = name;
         this.tables = tables;
+        this.description = description;
+        this.rating = rating;
         for(Table table: tables){
             table.setRestaurant(this);
         }
@@ -34,6 +38,14 @@ public class Restaurant {
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public float getRating() {
+        return rating;
     }
 
     public List<Table> getTables() {

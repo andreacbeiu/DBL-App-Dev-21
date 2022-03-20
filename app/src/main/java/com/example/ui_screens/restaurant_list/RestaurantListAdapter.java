@@ -30,16 +30,28 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView textView;
+        private final TextView nametv;
+        private final TextView descriptiontv;
+        private final TextView ratingtv;
 
         public ViewHolder(View view){
             super(view);
 
-            textView = (TextView) view.findViewById(R.id.tvRestaurantListItem);
+            nametv = (TextView) view.findViewById(R.id.tvRestaurantListName);
+            descriptiontv = (TextView) view.findViewById(R.id.tvRestaurantListDescription);
+            ratingtv = (TextView) view.findViewById(R.id.tvRestaurantListRating);
         }
 
-        public TextView getTextView() {
-            return textView;
+        public TextView getNametv() {
+            return nametv;
+        }
+
+        public TextView getDescriptiontv() {
+            return descriptiontv;
+        }
+
+        public TextView getRatingtv() {
+            return ratingtv;
         }
     }
 
@@ -58,7 +70,8 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
                                 tables.add(table);
                             }
 
-                            Restaurant tempRestaurant = new Restaurant(document.getId(), document.getData().get("name").toString(), tables);
+                            Restaurant tempRestaurant = new Restaurant(document.getId(), document.getData().get("name").toString(),
+                                    document.getData().get("description").toString(), ((Double) document.getData().get("rating")).floatValue(), tables);
                             restaurants.add(tempRestaurant);
                         }
                         this.notifyDataSetChanged();
@@ -76,7 +89,10 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.getTextView().setText(restaurants.get(position).getName());
+        holder.getNametv().setText(restaurants.get(position).getName());
+        holder.getDescriptiontv().setText(restaurants.get(position).getDescription());
+        holder.getRatingtv().setText(String.valueOf(restaurants.get(position).getRating()));
+        holder.itemView.setTag(restaurants.get(position).getId());
     }
 
     @Override
