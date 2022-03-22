@@ -51,11 +51,11 @@
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/bookbutton"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="book"
+        android:text="Book"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.116"
         app:layout_constraintStart_toStartOf="parent"

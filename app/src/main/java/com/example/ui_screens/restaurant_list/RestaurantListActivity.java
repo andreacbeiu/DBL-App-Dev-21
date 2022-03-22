@@ -48,14 +48,14 @@ public class RestaurantListActivity extends AppCompatActivity {
         }));
     }
 
-    //Menu inflater
+    //Top bar menu inflater
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.customer_menu, menu);
         return true;
     }
 
-    //Handles actions
+    //Handles menu actions
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
