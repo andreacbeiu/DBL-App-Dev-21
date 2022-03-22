@@ -1,5 +1,7 @@
 package com.example.ui_screens.data;
 
+import com.google.firebase.firestore.GeoPoint;
+
 import java.util.List;
 
 public class Restaurant {
@@ -8,8 +10,9 @@ public class Restaurant {
     private List<Table> tables;
     private String description;
     private float rating;
+    private Location location;
 
-    public Restaurant(String id, String name, String description, float rating, List<Table> tables){
+    public Restaurant(String id, String name, String description, float rating, List<Table> tables, GeoPoint location){
         this.id = id;
         this.name = name;
         this.tables = tables;

@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< Updated upstream
         <entry key="..\:/Users/20201378/AndroidStudioProjects/DBL-App-Dev-21/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.26" />
         <entry key="..\:/Users/20201378/AndroidStudioProjects/DBL-App-Dev-21/app/src/main/res/drawable/ic_launcher_background.xml" value="0.5475" />
         <entry key="..\:/Users/20201378/AndroidStudioProjects/DBL-App-Dev-21/app/src/main/res/layout-w1240dp/activity_registration.xml" value="0.35609103078982596" />
@@ -17,9 +18,21 @@
         <entry key="..\:/Users/20201378/AndroidStudioProjects/DBL-App-Dev-21/app/src/main/res/layout/restaurant_list_item.xml" value="0.28940217391304346" />
         <entry key="..\:/Users/20201378/AndroidStudioProjects/DBL-App-Dev-21/app/src/main/res/layout/restaurant_tables_activity.xml" value="0.4713541666666667" />
         <entry key="..\:/Users/20201378/AndroidStudioProjects/DBL-App-Dev-21/app/src/main/res/layout/restaurant_tables_page.xml" value="0.5541666666666667" />
+=======
+        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_maps.xml" value="0.13360507246376813" />
+        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/restaurant_list_item.xml" value="0.1" />
+>>>>>>> Stashed changes
         <entry key="..\:/Users/20201568/Desktop/2is70 - dbl app development/UI_screens/app/src/main/res/layout/activity_customer_login.xml" value="0.264" />
         <entry key="..\:/Users/20201568/Desktop/2is70 - dbl app development/UI_screens/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/20201568/Desktop/2is70 - dbl app development/UI_screens/app/src/main/res/layout/activity_restaurant_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/garga/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_customer_login.xml" value="0.4109375" />
+        <entry key="..\:/Users/garga/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_main.xml" value="0.32653985507246375" />
+        <entry key="..\:/Users/garga/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_registration.xml" value="0.4109375" />
+        <entry key="..\:/Users/garga/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_restaurant_login.xml" value="0.4109375" />
+        <entry key="..\:/Users/hugov/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/hugov/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_restaurant_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/hugov/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_restaurant_login.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/hugov/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/restaurant_list_item.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
