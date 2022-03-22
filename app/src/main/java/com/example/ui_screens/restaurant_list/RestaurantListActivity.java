@@ -2,12 +2,15 @@ package com.example.ui_screens.restaurant_list;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ui_screens.MainActivity;
 import com.example.ui_screens.R;
 import com.example.ui_screens.RestaurantLoginActivity;
 import com.example.ui_screens.ViewRestaurantActivity;
@@ -44,4 +47,24 @@ public class RestaurantListActivity extends AppCompatActivity {
             }
         }));
     }
+
+    //Menu inflater
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.customer_menu, menu);
+        return true;
+    }
+
+    //Handles actions
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_search:
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
