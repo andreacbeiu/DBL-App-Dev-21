@@ -32,6 +32,7 @@ public class RestaurantListActivity extends AppCompatActivity {
             public void onClick(View view, int position) {
                 //changes activity to a different one
                 Intent intent = new Intent(RestaurantListActivity.this, ViewRestaurantActivity.class);
+                intent.putExtra("id", view.getTag().toString());
                 //starts the activity associated with the intent
                 startActivity(intent);
 
