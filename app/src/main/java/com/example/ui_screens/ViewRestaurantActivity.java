@@ -3,6 +3,7 @@ package com.example.ui_screens;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +11,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Calendar;
 
 public class ViewRestaurantActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -46,7 +51,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
         return true;
     }
 
-    //Handles menu actions
+    //Handles actions in the topbar menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
@@ -58,69 +63,76 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
     }
 
 
-
-    /*private void dialogBook(View view) {
-        //use an alert dialog
-        AlertDialog.Builder dialog_Book = new AlertDialog.Builder(this);
-        //set layout
-        dialog_Book.setView(R.layout.dialog_book);
-        //set message + title
-        dialog_Book.setMessage("Book a Table!");
-        dialog_Book.setTitle("Book a Table!");
-
-        AlertDialog dialog = dialog_Book.create();
-
-
-        //create button for confirmation
-        //dialog_Book.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-        //    public void onClick(DialogInterface dialog, int id) {
-        //        // START THE GAME!
-        //    }
-        //});
-        //create button for deletion of event
-        //dialog_Book.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
-        //    public void onClick(DialogInterface dialog, int id) {
-        //        // User cancelled the dialog
-        //    }
-        }*/
-
+    //creates a dialog window when bookbutton is pressed
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bookbutton:
-                alertDialog();
+                bookDialog();
                 break;
         }
     }
 
-    private void alertDialog() {
-        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+
+    //dialog window builder function for bookbutton
+    public void bookDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Book a Table");
 
+        //set layout of the dialog pop upb
         dialog.setView(R.layout.dialogbooklayout);
-        dialog.setPositiveButton("YES",
+
+        //sets positive button
+        dialog.setPositiveButton("CONTINUE",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
                         Toast.makeText(getApplicationContext(),"You have booked a table!",Toast.LENGTH_LONG).show();
-                        EditText nrpeople = (EditText) findViewById(R.id.nrpeople);
-                        EditText date = (EditText) findViewById(R.id.date);
-                        EditText message = (EditText) findViewById(R.id.message);
-                        //get the input values
-                        String str_nrpeople = nrpeople.getText().toString();
-                        String str_date = date.getText().toString();
-                        String str_message = message.getText().toString();
+                        //get input values for nr of people + date + message
+                        int int_nrpeople = getNrPeople(R.id.nrpeople);
+                        String str_date = getDate(R.id.date);
+                        String str_message = getMessage(R.id.message);
                     }
                 });
-        dialog.setNegativeButton("cancel",new DialogInterface.OnClickListener() {
+
+        //sets negative button
+        dialog.setNegativeButton("CANCEL",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getApplicationContext(),"You have cancelled a booking!",Toast.LENGTH_LONG).show();
             }
         });
-        AlertDialog alertDialog=dialog.create();
-        alertDialog.show();
+        //create the dialog pop-up
+        AlertDialog bookingDialog = dialog.create();
+        bookingDialog.show();
     }
+
+
+    public int getNrPeople (int id) {
+        EditText nrpeople = (EditText) findViewById(id);
+        String str_nrpeople = nrpeople.getText().toString();
+        int int_nrpeople = Integer.parseInt(str_nrpeople);
+        return int_nrpeople;
+    }
+
+    public String getMessage (int id) {
+        EditText message = (EditText) findViewById(id);
+        String str_message = message.getText().toString();
+        return str_message;
+    }
+
+    public String getDate (int id) {
+        DatePicker date = (DatePicker) findViewById(id);
+        int day = date.getDayOfMonth ();
+        int month = date.getMonth();
+        int year = date.getYear();
+        String str_date = day + "/" + (month + 1) + "/" + year;
+        return str_date;
+    }
+
+
+
+
 
 }
 
