@@ -30,4 +30,11 @@ public class RestaurantMainActivity extends AppCompatActivity {
         //starts the activity associated with the intent
         startActivity(intent);
     }
+
+    public void restaurantTables(View view) {
+        //sets the intent of the function: changing the activity
+        Intent intent = new Intent(this, RestaurantTablesActivity.class);
+        //starts the activity associated with the intent
+        startActivity(intent);
+    }
 }

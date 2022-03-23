@@ -6,11 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ui_screens.R;
 
-public class RestaurantEditActivity extends AppCompatActivity {
-
+public class RestaurantTablesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.); //xml file doesn't exist yet
+        setContentView(R.layout.restaurant_tables_activity);
     }
 }
