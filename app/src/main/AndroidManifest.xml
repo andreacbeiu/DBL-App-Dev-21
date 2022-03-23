@@ -29,6 +29,18 @@
             android:name=".restaurant_list.RestaurantListActivity"
             android:exported="false" />
         <activity
+            android:name=".restaurants.RestaurantMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".restaurants.RestaurantEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".restaurants.RestaurantRewardsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".restaurants.RestaurantTablesActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
