@@ -79,14 +79,47 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bookbutton:
-                bookDialog();
+                pickTimeDialog();
                 break;
         }
     }
 
 
     //dialog window builder function for bookbutton
-    public void bookDialog() {
+    public void pickTimeDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Book a Table");
+
+        //set layout of the dialog pop upb
+        dialog.setView(R.layout.dialogtimepicklayout);
+
+        //sets positive button
+        dialog.setPositiveButton("CONTINUE",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+
+                        //get input values for nr of people + date + message
+                        String str_date = getDate(R.id.date).toString();
+                        String str_time = getTime(R.id.time).toString();
+                        confirmBookingDialog();
+
+                    }
+                });
+
+        //sets negative button
+        dialog.setNegativeButton("CANCEL",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"You have cancelled a booking!",Toast.LENGTH_LONG).show();
+            }
+        });
+        //create the dialog pop-up
+        AlertDialog bookingDialog = dialog.create();
+        bookingDialog.show();
+    }
+
+    public void confirmBookingDialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Book a Table");
 
@@ -94,14 +127,13 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
         dialog.setView(R.layout.dialogbooklayout);
 
         //sets positive button
-        dialog.setPositiveButton("CONTINUE",
+        dialog.setPositiveButton("BOOK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
                         Toast.makeText(getApplicationContext(),"You have booked a table!",Toast.LENGTH_LONG).show();
                         //get input values for nr of people + date + message
                         int int_nrpeople = getNrPeople(R.id.nrpeople);
-                        String str_date = getDate(R.id.date);
                         String str_message = getMessage(R.id.message);
                     }
                 });
@@ -139,6 +171,22 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
         int year = date.getYear();
         String str_date = day + "/" + (month + 1) + "/" + year;
         return str_date;
+    }
+
+    public String getTime (int id) {
+        TimePicker time = (TimePicker) findViewById(id);
+        int hour = 0;
+        int minute = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            hour = time.getHour();
+        }
+        else { hour = time.getCurrentHour(); }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            minute = time.getMinute();
+        }
+        else { minute = time.getCurrentMinute(); }
+        String str_time = minute + ":" + hour;
+        return str_time;
     }
 
 

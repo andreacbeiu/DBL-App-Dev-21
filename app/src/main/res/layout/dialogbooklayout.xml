@@ -15,20 +15,6 @@
         android:layout_marginBottom="4dp"
         android:hint="Enter number of people" />
 
-    <DatePicker
-        android:id="@+id/date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:datePickerMode="spinner"
-        android:calendarViewShown="false"
-        android:layout_centerHorizontal="true"/>
-
-    <TimePicker
-        android:id="@+id/time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:timePickerMode="spinner"/>
-
     <EditText
         android:id="@+id/message"
         android:inputType= "text"
