@@ -14,6 +14,9 @@
         android:theme="@style/Theme.UI_screens">
 
         <activity
+            android:name=".SearchPageActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewRestaurantActivity"
             android:exported="false" />
         <activity

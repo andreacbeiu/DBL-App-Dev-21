@@ -3,18 +3,31 @@ package com.example.ui_screens;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.ui_screens.restaurant_list.RestaurantListActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.Calendar;
 
 public class ViewRestaurantActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -55,84 +68,149 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.customer_menu, menu);
+        getMenuInflater().inflate(R.menu.options_menu, menu);
         return true;
     }
 
-    //Handles menu actions
+    //Handles actions in the topbar menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_search:
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, SearchPageActivity.class));
+                return true;
+            case R.id.nearbyrestaurants:
+                startActivity(new Intent(this, RestaurantListActivity.class));
+                return true;
+            case R.id.account:
+                startActivity(new Intent(this, RestaurantLoginActivity.class));
+                return true;
+            case R.id.chat:
+                startActivity(new Intent(this, RestaurantLoginActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-
-    /*private void dialogBook(View view) {
-        //use an alert dialog
-        AlertDialog.Builder dialog_Book = new AlertDialog.Builder(this);
-        //set layout
-        dialog_Book.setView(R.layout.dialog_book);
-        //set message + title
-        dialog_Book.setMessage("Book a Table!");
-        dialog_Book.setTitle("Book a Table!");
-
-        AlertDialog dialog = dialog_Book.create();
-
-
-        //create button for confirmation
-        //dialog_Book.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-        //    public void onClick(DialogInterface dialog, int id) {
-        //        // START THE GAME!
-        //    }
-        //});
-        //create button for deletion of event
-        //dialog_Book.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
-        //    public void onClick(DialogInterface dialog, int id) {
-        //        // User cancelled the dialog
-        //    }
-        }*/
-
+    //creates a dialog window when bookbutton is pressed
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bookbutton:
-                alertDialog();
+                pickTimeDialog();
                 break;
         }
     }
 
-    private void alertDialog() {
-        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+
+    //dialog window builder function for bookbutton
+    public void pickTimeDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Book a Table");
 
-        dialog.setView(R.layout.dialogbooklayout);
-        dialog.setPositiveButton("YES",
+        //set layout of the dialog pop upb
+        dialog.setView(R.layout.dialogtimepicklayout);
+
+        //sets positive button
+        dialog.setPositiveButton("CONTINUE",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
-                        Toast.makeText(getApplicationContext(),"You have booked a table!",Toast.LENGTH_LONG).show();
-                        EditText nrpeople = (EditText) findViewById(R.id.nrpeople);
-                        EditText date = (EditText) findViewById(R.id.date);
-                        EditText message = (EditText) findViewById(R.id.message);
-                        //get the input values
-                        String str_nrpeople = nrpeople.getText().toString();
-                        String str_date = date.getText().toString();
-                        String str_message = message.getText().toString();
+
+                        //get input values for nr of people + date + message
+                        String str_date = getDate(R.id.date).toString();
+                        String str_time = getTime(R.id.time).toString();
+                        confirmBookingDialog();
+
                     }
                 });
-        dialog.setNegativeButton("cancel",new DialogInterface.OnClickListener() {
+
+        //sets negative button
+        dialog.setNegativeButton("CANCEL",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getApplicationContext(),"You have cancelled a booking!",Toast.LENGTH_LONG).show();
             }
         });
-        AlertDialog alertDialog=dialog.create();
-        alertDialog.show();
+        //create the dialog pop-up
+        AlertDialog bookingDialog = dialog.create();
+        bookingDialog.show();
     }
+
+    public void confirmBookingDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Book a Table");
+
+        //set layout of the dialog pop upb
+        dialog.setView(R.layout.dialogbooklayout);
+
+        //sets positive button
+        dialog.setPositiveButton("BOOK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        Toast.makeText(getApplicationContext(),"You have booked a table!",Toast.LENGTH_LONG).show();
+                        //get input values for nr of people + date + message
+                        int int_nrpeople = getNrPeople(R.id.nrpeople);
+                        String str_message = getMessage(R.id.message);
+                    }
+                });
+
+        //sets negative button
+        dialog.setNegativeButton("CANCEL",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"You have cancelled a booking!",Toast.LENGTH_LONG).show();
+            }
+        });
+        //create the dialog pop-up
+        AlertDialog bookingDialog = dialog.create();
+        bookingDialog.show();
+    }
+
+
+    public int getNrPeople (int id) {
+        EditText nrpeople = (EditText) findViewById(id);
+        String str_nrpeople = nrpeople.getText().toString();
+        int int_nrpeople = Integer.parseInt(str_nrpeople);
+        return int_nrpeople;
+    }
+
+    public String getMessage (int id) {
+        EditText message = (EditText) findViewById(id);
+        String str_message = message.getText().toString();
+        return str_message;
+    }
+
+    public String getDate (int id) {
+        DatePicker date = (DatePicker) findViewById(id);
+        int day = date.getDayOfMonth ();
+        int month = date.getMonth();
+        int year = date.getYear();
+        String str_date = day + "/" + (month + 1) + "/" + year;
+        return str_date;
+    }
+
+    public String getTime (int id) {
+        TimePicker time = (TimePicker) findViewById(id);
+        int hour = 0;
+        int minute = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            hour = time.getHour();
+        }
+        else { hour = time.getCurrentHour(); }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            minute = time.getMinute();
+        }
+        else { minute = time.getCurrentMinute(); }
+        String str_time = minute + ":" + hour;
+        return str_time;
+    }
+
+
+
+
 
 }
 
