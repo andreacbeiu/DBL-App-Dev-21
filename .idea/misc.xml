@@ -23,14 +23,9 @@
         <entry key="..\:/Users/20201568/Desktop/2is70 - dbl app development/UI_screens/app/src/main/res/layout/activity_customer_login.xml" value="0.264" />
         <entry key="..\:/Users/20201568/Desktop/2is70 - dbl app development/UI_screens/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/20201568/Desktop/2is70 - dbl app development/UI_screens/app/src/main/res/layout/activity_restaurant_login.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/garga/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_customer_login.xml" value="0.4109375" />
-        <entry key="..\:/Users/garga/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_main.xml" value="0.32653985507246375" />
-        <entry key="..\:/Users/garga/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_registration.xml" value="0.4109375" />
-        <entry key="..\:/Users/garga/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_restaurant_login.xml" value="0.4109375" />
-        <entry key="..\:/Users/hugov/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/hugov/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_restaurant_list.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/hugov/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_restaurant_login.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/hugov/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/restaurant_list_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/20201568/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_customer_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/20201568/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_view_restaurant.xml" value="0.8" />
+        <entry key="..\:/Users/20201568/Desktop/DBL-App-Dev-21/app/src/main/res/layout/dialogbooklayout.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
