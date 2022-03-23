@@ -3,18 +3,18 @@ package com.example.ui_screens;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class ViewRestaurantActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -37,6 +37,18 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                         ((TextView)findViewById(R.id.tvViewRestaurantName)).setText(task.getResult().getData().get("name").toString());
                     }
                 });
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("images/" + getIntent().getExtras().getString("id")+".jpg");
+        ImageView imageView = findViewById(R.id.ivViewRestaurant);
+
+        final long ONE_MEGABYTE = 1024*1024;
+        storageRef.getBytes(ONE_MEGABYTE * 2).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                imageView.setImageBitmap(bmp);
+            }
+        });
     }
 
     //Top bar menu inflater
