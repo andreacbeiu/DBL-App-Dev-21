@@ -52,15 +52,25 @@ public class RestaurantListActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.customer_menu, menu);
+        getMenuInflater().inflate(R.menu.options_menu, menu);
         return true;
     }
 
-    //Handles menu actions
+    //Handles actions in the topbar menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_search:
                 startActivity(new Intent(this, MainActivity.class));
+                return true;
+            case R.id.nearbyrestaurants:
+                startActivity(new Intent(this, RestaurantListActivity.class));
+                return true;
+            case R.id.account:
+                startActivity(new Intent(this, RestaurantLoginActivity.class));
+                return true;
+            case R.id.chat:
+                startActivity(new Intent(this, RestaurantLoginActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
