@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -29,6 +31,7 @@ public class ViewRestaurantActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         ((TextView)findViewById(R.id.tvViewRestaurantName)).setText(task.getResult().getData().get("name").toString());
+                        ((TextView)findViewById(R.id.tvViewRestaurantRating)).setText("Rating: " + ((Double)task.getResult().getData().get("rating")).toString());
                     }
                 });
 
@@ -42,6 +45,8 @@ public class ViewRestaurantActivity extends AppCompatActivity {
                 Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 imageView.setImageBitmap(bmp);
             }
+        }).addOnFailureListener(e -> {
+            imageView.setImageDrawable(getDrawable(R.drawable.default_restaurant));
         });
     }
 }
