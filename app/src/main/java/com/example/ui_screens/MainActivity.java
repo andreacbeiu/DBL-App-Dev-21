@@ -39,5 +39,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void customerLocation(View view) {
+        //sets the intent of the function: changing the activity
+        Intent intent = new Intent(this, CustomerLocationActivity.class);
+        //starts the activity associated with the intent
+        startActivity(intent);
+    }
+
 
 }
