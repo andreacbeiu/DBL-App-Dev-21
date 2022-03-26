@@ -16,12 +16,12 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.os.Looper;
-import android.provider.Settings;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.geofire.GeoFireUtils;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.LocationCallback;
@@ -31,22 +31,22 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.common.api.ResolvableApiException;
+
+// followed tutorial by: https://github.com/Pritish-git
 
 public class CustomerLocationActivity extends AppCompatActivity{
     private TextView AddressText;
     private Button LocationButton;
     private LocationRequest locationRequest;
-
+    private static final int REQUEST_CHECK_SETTINGS = 10001;
+    String hash = new String();
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
-        AddressText = findViewById(R.id.addressText);
         LocationButton = findViewById(R.id.locationButton);
 
         locationRequest = LocationRequest.create();
@@ -54,62 +54,44 @@ public class CustomerLocationActivity extends AppCompatActivity{
         locationRequest.setInterval(5000);
         locationRequest.setFastestInterval(2000);
 
-        LocationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getCurrentLocation();
-            }
-        });
-
+        LocationButton.setOnClickListener(v -> getCurrentLocation());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        boolean isEnabled = false;
-
-        try {
-            isEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        } catch(Exception ex) {}
-
-        if (!isEnabled) {
+        if (!isGPSEnabled())
             turnOnGPS();
-        }
+        else
+            hash = getCurrentLocation();
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == 1)
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                if (isGPSEnabled())
-                    getCurrentLocation();
-                else
-                    turnOnGPS();
+        if (requestCode == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            if (isGPSEnabled())
+                hash = getCurrentLocation();
+            else
+                turnOnGPS();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 2) {
-            if (resultCode == Activity.RESULT_OK) {
-                getCurrentLocation();
-            }
-        }
+        if (requestCode == 2)
+            if (resultCode == Activity.RESULT_OK)
+                hash = getCurrentLocation();
     }
 
-    private void getCurrentLocation() {
+    public String getCurrentLocation() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(CustomerLocationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-                // if GPS is already enabled
                 if (isGPSEnabled()) {
-
                     LocationServices.getFusedLocationProviderClient(CustomerLocationActivity.this)
                             .requestLocationUpdates(locationRequest, new LocationCallback() {
                                 @Override
@@ -124,22 +106,55 @@ public class CustomerLocationActivity extends AppCompatActivity{
                                         int index = locationResult.getLocations().size() - 1;
                                         double latitude = locationResult.getLocations().get(index).getLatitude();
                                         double longitude = locationResult.getLocations().get(index).getLongitude();
+                                        hash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(latitude, longitude));
+                                        Toast.makeText(CustomerLocationActivity.this, hash, Toast.LENGTH_SHORT).show();
 
-                                        AddressText.setText("Latitude: "+ latitude + "\n" + "Longitude: "+ longitude);
                                     }
                                 }
                             }, Looper.getMainLooper());
 
-                }
-                else turnOnGPS();
-            } else requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                } else
+                    turnOnGPS();
+
+            } else
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
         }
+
+        return hash;
     }
 
-    // open the user's settings and make them turn on the GPS manually
     private void turnOnGPS() {
-        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        startActivity(intent);
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest);
+        builder.setAlwaysShow(true);
+
+        Task<LocationSettingsResponse> result = LocationServices.getSettingsClient(getApplicationContext())
+                .checkLocationSettings(builder.build());
+
+        result.addOnCompleteListener(task -> {
+            try {
+                LocationSettingsResponse response = task.getResult(ApiException.class);
+                Toast.makeText(CustomerLocationActivity.this, "GPS is already tured on", Toast.LENGTH_SHORT).show();
+
+            } catch (ApiException e) {
+                switch (e.getStatusCode()) {
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        try {
+                            ResolvableApiException resolvableApiException = (ResolvableApiException) e;
+                            resolvableApiException.startResolutionForResult(CustomerLocationActivity.this, 2);
+                        } catch (IntentSender.SendIntentException ex) {
+                            ex.printStackTrace();
+                        }
+                        break;
+
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        //Device does not have location
+                        break;
+                }
+            }
+        });
+
     }
 
     /**
@@ -149,13 +164,13 @@ public class CustomerLocationActivity extends AppCompatActivity{
      */
     private boolean isGPSEnabled() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        boolean isEnabled = false;
+        boolean enabled = false;
 
         try {
-            isEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         } catch(Exception ex) {}
 
-        return isEnabled;
+        return enabled;
     }
 
 }
