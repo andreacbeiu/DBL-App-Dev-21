@@ -11,6 +11,6 @@ public class RestaurantEditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.); //xml file doesn't exist yet
+        setContentView(R.layout.activity_edit_restaurant);
     }
 }
