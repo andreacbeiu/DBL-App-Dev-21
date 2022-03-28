@@ -21,24 +21,25 @@
 
     <Button
         android:id="@+id/restaurantEdit"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="10dp"
-        android:text="Edit"
         android:onClick="restaurantEdit"
+        android:text="Edit"
         app:layout_constraintEnd_toStartOf="@+id/restaurantRewards"
         app:layout_constraintStart_toEndOf="@+id/restaurantChats"
         app:layout_constraintTop_toBottomOf="@+id/textRestaurantName" />
 
     <Button
         android:id="@+id/restaurantRewards"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="43dp"
         android:text="Rewards"
+        android:textSize="13dp"
         android:onClick="restaurantRewards"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/restaurantEdit"
@@ -46,7 +47,7 @@
 
     <Button
         android:id="@+id/restaurantChats"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginTop="8dp"
@@ -58,34 +59,34 @@
 
     <Button
         android:id="@+id/restaurantTables"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:onClick="restaurantTables"
         android:text="Tables"
-        app:layout_constraintEnd_toStartOf="@+id/restaurantAccounts"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/restaurantChats" />
 
     <Button
         android:id="@+id/restaurantAccounts"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:text="Accounts"
+        android:textSize="11dp"
         app:layout_constraintEnd_toStartOf="@+id/restaurantSignOut"
         app:layout_constraintStart_toEndOf="@+id/restaurantTables"
         app:layout_constraintTop_toBottomOf="@+id/restaurantEdit" />
 
     <Button
         android:id="@+id/restaurantSignOut"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="43dp"
         android:text="Sign out"
+        android:textSize="13dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/restaurantAccounts"
         app:layout_constraintTop_toBottomOf="@+id/restaurantRewards" />
 
     <TextView
