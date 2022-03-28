@@ -1,4 +1,4 @@
-package com.example.ui_screens.restaurant_list;
+package com.example.ui_screens.customers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,26 +15,27 @@ import com.example.ui_screens.R;
 import com.example.ui_screens.customers.RestaurantLoginActivity;
 import com.example.ui_screens.customers.ViewRestaurantActivity;
 import com.example.ui_screens.data.RecyclerTouchListener;
+import com.example.ui_screens.restaurant_list.RestaurantListActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class RestaurantListActivity extends AppCompatActivity {
+public class RewardsListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restaurant_list);
+        setContentView(R.layout.activity_rewards_list);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        RecyclerView rvRestaurants = findViewById(R.id.rvRestaurants);
+        RecyclerView rvRewards = findViewById(R.id.rvRewards);
 
-        RestaurantListAdapter rvRestaurantsAdapter = new RestaurantListAdapter(db);
-        rvRestaurants.setAdapter(rvRestaurantsAdapter);
-        rvRestaurants.setLayoutManager(new LinearLayoutManager(this));
+        RewardsListAdapter rvRewardsAdapter = new RewardsListAdapter(db);
+        rvRewards.setAdapter(rvRewardsAdapter);
+        rvRewards.setLayoutManager(new LinearLayoutManager(this));
 
-        rvRestaurants.addOnItemTouchListener(new RecyclerTouchListener(this, rvRestaurants, new RecyclerTouchListener.ClickListener() {
+        rvRewards.addOnItemTouchListener(new RecyclerTouchListener(this, rvRewards, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 //changes activity to a different one
-                Intent intent = new Intent(RestaurantListActivity.this, ViewRestaurantActivity.class);
+                Intent intent = new Intent(RewardsListActivity.this, ViewRestaurantActivity.class);
                 intent.putExtra("id", view.getTag().toString());
                 //starts the activity associated with the intent
                 startActivity(intent);
