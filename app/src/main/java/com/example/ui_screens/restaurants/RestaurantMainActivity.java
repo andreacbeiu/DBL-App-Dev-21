@@ -6,7 +6,11 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ui_screens.CustomerLoginActivity;
 import com.example.ui_screens.R;
+import com.example.ui_screens.restaurants.RestaurantEditActivity;
+import com.example.ui_screens.restaurants.RestaurantRewardsActivity;
+import com.example.ui_screens.restaurants.RestaurantTablesActivity;
 
 public class RestaurantMainActivity extends AppCompatActivity {
 

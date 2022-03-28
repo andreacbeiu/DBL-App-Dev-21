@@ -1,4 +1,4 @@
-package com.example.ui_screens.customers;
+package com.example.ui_screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import android.view.View;
 
-import com.example.ui_screens.R;
 import com.example.ui_screens.restaurants.RestaurantMainActivity;
 
 public class RestaurantLoginActivity extends AppCompatActivity {

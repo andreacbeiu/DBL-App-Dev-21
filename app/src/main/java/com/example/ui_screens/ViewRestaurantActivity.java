@@ -1,4 +1,4 @@
-package com.example.ui_screens.customers;
+package com.example.ui_screens;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.ui_screens.R;
 import com.example.ui_screens.restaurant_list.RestaurantListActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 

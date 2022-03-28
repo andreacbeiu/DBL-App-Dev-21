@@ -10,10 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ui_screens.customers.MainActivity;
+import com.example.ui_screens.MainActivity;
 import com.example.ui_screens.R;
-import com.example.ui_screens.customers.RestaurantLoginActivity;
-import com.example.ui_screens.customers.ViewRestaurantActivity;
+import com.example.ui_screens.RestaurantLoginActivity;
+import com.example.ui_screens.ViewRestaurantActivity;
 import com.example.ui_screens.data.RecyclerTouchListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
