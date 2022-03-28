@@ -10,20 +10,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UI_screens">
         <activity
-            android:name=".SearchPageActivity"
+            android:name=".customers.RewardListActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewRestaurantActivity"
+            android:name=".customers.SearchPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customers.ViewRestaurantActivity"
             android:exported="false" />
         <activity
             android:name=".ui.login.RegistrationActivity"
             android:exported="false"
             android:label="@string/title_activity_registration" />
         <activity
-            android:name=".RestaurantLoginActivity"
+            android:name=".customers.RestaurantLoginActivity"
             android:exported="false" />
         <activity
-            android:name=".CustomerLoginActivity"
+            android:name=".customers.CustomerLoginActivity"
             android:exported="false" />
         <activity
             android:name=".restaurant_list.RestaurantListActivity"
@@ -41,7 +44,7 @@
             android:name=".restaurants.RestaurantTablesActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".customers.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

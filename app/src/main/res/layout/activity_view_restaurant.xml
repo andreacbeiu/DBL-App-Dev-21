@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewRestaurantActivity">
+    tools:context=".customers.ViewRestaurantActivity">
 
     <TextView
         android:id="@+id/tvViewRestaurantName"
@@ -66,6 +66,7 @@
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:onClick="onRewardsClick"
         android:text="Rewards"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.877"

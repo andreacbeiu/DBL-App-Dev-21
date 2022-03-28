@@ -1,4 +1,4 @@
-package com.example.ui_screens;
+package com.example.ui_screens.customers;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.ui_screens.R;
 import com.example.ui_screens.restaurant_list.RestaurantListActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -176,6 +177,11 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
         //create the dialog pop-up
         AlertDialog bookingDialog = dialog.create();
         bookingDialog.show();
+    }
+
+    public void onRewardsClick(View view) {
+        Intent intent = new Intent(this, RewardListActivity.class);
+        startActivity(intent);
     }
 
 
