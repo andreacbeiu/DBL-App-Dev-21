@@ -1,13 +1,22 @@
 package com.example.ui_screens;
 
 
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.ui_screens.ui.login.RegistrationActivity;
+import com.example.ui_screens.restaurant_list.RestaurantListActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -16,13 +25,26 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class CustomerLoginActivity extends AppCompatActivity {
 
+    private EditText editTextEmail, editTextPassword;
+    private Button button;
     FirebaseAuth mAuth;
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_login);
+
+        editTextEmail = (EditText) findViewById(R.id.loginemail);
+        editTextPassword = (EditText) findViewById(R.id.passwordlogin);
         mAuth = FirebaseAuth.getInstance();
+
+        button = (Button) findViewById(R.id.loginbutton);
+        button.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               loginUser();
+           }
+       });
     }
     @Override
     public void onStart() {
@@ -38,6 +60,35 @@ public class CustomerLoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RegistrationActivity.class);
         //starts the activity associated with the intent
         startActivity(intent);
+    }
+    public void loginUser(){
+        String email = editTextEmail.getText().toString();
+        String password = editTextPassword.getText().toString();
+
+        if (email.isEmpty()) {
+            editTextEmail.setError("Email Cannot Be Empty");
+            editTextEmail.requestFocus();
+            return;
+        }
+
+        if (password.isEmpty()) {
+            editTextPassword.setError("Password Cannot Be Empty");
+            editTextPassword.requestFocus();
+            return;
+
+        }
+
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(CustomerLoginActivity.this, "User Logged In Successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(CustomerLoginActivity.this, RestaurantListActivity.class));
+                } else {
+                    Toast.makeText(CustomerLoginActivity.this, "User Login Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 }

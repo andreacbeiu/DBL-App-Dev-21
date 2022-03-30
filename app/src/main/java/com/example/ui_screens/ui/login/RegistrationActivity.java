@@ -101,7 +101,7 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
         if (password.isEmpty()) {
-            editTextPassword.setError("Email Cannot Be Empty");
+            editTextPassword.setError("Password Cannot Be Empty");
             editTextPassword.requestFocus();
             return;
 
@@ -120,6 +120,8 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
         progressBar.setVisibility(View.VISIBLE);
+
+
 
 
 
