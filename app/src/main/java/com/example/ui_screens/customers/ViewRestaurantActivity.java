@@ -162,7 +162,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                         str_nrpeople = nrpeople.getText().toString();
                         str_message = message.getText().toString();
 
-                        Toast.makeText(getApplicationContext(), str_message, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "You have booked a table!", Toast.LENGTH_LONG).show();
 
                     }
                 });
