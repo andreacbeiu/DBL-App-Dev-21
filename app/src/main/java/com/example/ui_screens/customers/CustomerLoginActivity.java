@@ -1,4 +1,4 @@
-package com.example.ui_screens;
+package com.example.ui_screens.customers;
 
 
 
@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.ui_screens.R;
 import com.example.ui_screens.ui.login.RegistrationActivity;
 import com.example.ui_screens.restaurant_list.RestaurantListActivity;
 import com.google.android.gms.tasks.OnCompleteListener;

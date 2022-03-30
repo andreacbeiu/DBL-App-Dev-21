@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nearbyrestaurants"
+        android:title="Nearby Restaurants" />
+
+    <item
+        android:id="@+id/account"
+        android:title="Account" />
+
+    <item
+        android:id="@+id/chat"
+        android:title="Chat" />
+
+    <item
+        android:id="@+id/restaurantSignOut"
+        android:title="Sign Out" />
+
+</menu>
