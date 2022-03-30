@@ -62,6 +62,11 @@ public class CustomerLoginActivity extends AppCompatActivity {
         //starts the activity associated with the intent
         startActivity(intent);
     }
+
+    public void loginClicked(View view) {
+       loginUser();
+    }
+
     public void loginUser(){
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
