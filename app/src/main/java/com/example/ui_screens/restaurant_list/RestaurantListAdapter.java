@@ -12,7 +12,6 @@ import com.example.ui_screens.R;
 import com.example.ui_screens.data.Restaurant;
 import com.example.ui_screens.data.Table;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.lang.reflect.Array;
@@ -71,12 +70,8 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
                                 tables.add(table);
                             }
 
-                            Restaurant tempRestaurant = new Restaurant(document.getId(),
-                                    document.getData().get("name").toString(),
-                                    document.getData().get("description").toString(),
-                                    ((Double) document.getData().get("rating")).floatValue(),
-                                    tables,
-                                    (GeoPoint) document.getData().get("location"));
+                            Restaurant tempRestaurant = new Restaurant(document.getId(), document.getData().get("name").toString(),
+                                    document.getData().get("description").toString(), ((Double) document.getData().get("rating")).floatValue(), tables);
                             restaurants.add(tempRestaurant);
                         }
                         this.notifyDataSetChanged();
