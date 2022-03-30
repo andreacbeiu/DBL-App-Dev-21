@@ -1,4 +1,4 @@
-package com.example.ui_screens;
+package com.example.ui_screens.customers;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.ui_screens.R;
 import com.example.ui_screens.restaurant_list.RestaurantListActivity;
+import com.example.ui_screens.restaurants.RestaurantMainActivity;
 //import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void restaurantLogin(View view) {
         //sets the intent of the function: changing the activity
-        Intent intent = new Intent(this, RestaurantLoginActivity.class);
+        Intent intent = new Intent(this, RestaurantMainActivity.class);
         //starts the activity associated with the intent
         startActivity(intent);
     }
