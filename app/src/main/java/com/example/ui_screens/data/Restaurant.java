@@ -1,6 +1,7 @@
 package com.example.ui_screens.data;
-
+import com.google.firebase.firestore.*;
 import java.util.List;
+
 
 public class Restaurant {
     private String id;
@@ -8,8 +9,9 @@ public class Restaurant {
     private List<Table> tables;
     private String description;
     private float rating;
+    private GeoPoint location;
 
-    public Restaurant(String id, String name, String description, float rating, List<Table> tables){
+    public Restaurant(String id, String name, String description, float rating, List<Table> tables, GeoPoint location){
         this.id = id;
         this.name = name;
         this.tables = tables;
@@ -18,6 +20,7 @@ public class Restaurant {
         for(Table table: tables){
             table.setRestaurant(this);
         }
+        this.location = location;
     }
 
     public void setId(String id) {
@@ -51,4 +54,6 @@ public class Restaurant {
     public List<Table> getTables() {
         return tables;
     }
+
+    public GeoPoint getLocation(){ return location;}
 }
