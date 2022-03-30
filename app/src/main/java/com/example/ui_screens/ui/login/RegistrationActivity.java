@@ -24,10 +24,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ui_screens.CustomerLoginActivity;
+import com.example.ui_screens.customers.CustomerLoginActivity;
 import com.example.ui_screens.R;
-import com.example.ui_screens.ui.login.LoginViewModel;
-import com.example.ui_screens.ui.login.LoginViewModelFactory;
 import com.example.ui_screens.databinding.ActivityRegistrationBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -101,7 +99,7 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
         if (password.isEmpty()) {
-            editTextPassword.setError("Email Cannot Be Empty");
+            editTextPassword.setError("Password Cannot Be Empty");
             editTextPassword.requestFocus();
             return;
 
@@ -120,6 +118,8 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
         progressBar.setVisibility(View.VISIBLE);
+
+
 
 
 
