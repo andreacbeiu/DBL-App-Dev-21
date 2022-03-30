@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.example.ui_screens.R;
 import com.example.ui_screens.restaurants.RestaurantMainActivity;
+import com.example.ui_screens.restaurants.RestaurantRegisterActivity;
 
 public class RestaurantLoginActivity extends AppCompatActivity {
 
@@ -23,6 +24,10 @@ public class RestaurantLoginActivity extends AppCompatActivity {
         //sets the intent of the function: changing the activity
         Intent intent = new Intent(this, RestaurantMainActivity.class);
         //starts the activity associated with the intent
+        startActivity(intent);
+    }
+    public void restaurantRegister(View view) {
+        Intent intent = new Intent(this, RestaurantRegisterActivity.class);
         startActivity(intent);
     }
 }

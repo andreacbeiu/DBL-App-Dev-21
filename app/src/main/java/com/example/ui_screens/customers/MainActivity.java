@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void restaurantLogin(View view) {
         //sets the intent of the function: changing the activity
-        Intent intent = new Intent(this, RestaurantMainActivity.class);
+        Intent intent = new Intent(this, RestaurantLoginActivity.class);
         //starts the activity associated with the intent
         startActivity(intent);
     }

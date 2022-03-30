@@ -44,6 +44,9 @@
             android:name=".restaurants.RestaurantTablesActivity"
             android:exported="false" />
         <activity
+            android:name=".restaurants.RestaurantRegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".customers.MainActivity"
             android:exported="true">
             <intent-filter>
