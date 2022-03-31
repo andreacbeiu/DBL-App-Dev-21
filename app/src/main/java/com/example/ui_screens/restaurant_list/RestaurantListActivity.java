@@ -27,6 +27,8 @@ import com.example.ui_screens.R;
 import com.example.ui_screens.customers.RestaurantLoginActivity;
 import com.example.ui_screens.customers.ViewRestaurantActivity;
 import com.example.ui_screens.data.RecyclerTouchListener;
+import com.example.ui_screens.data.Restaurant;
+import com.example.ui_screens.data.Table;
 import com.firebase.geofire.GeoFireUtils;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQueryBounds;
@@ -46,22 +48,24 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-
+import com.example.ui_screens.data.Restaurant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RestaurantListActivity extends AppCompatActivity {
     private LocationRequest locationRequest;
     private static final int REQUEST_CHECK_SETTINGS = 10001;
     GeoLocation currentLocation;
-
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    RecyclerView rvRestaurants = findViewById(R.id.rvRestaurants);
+    private List<Restaurant> restaurants = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_list);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        RecyclerView rvRestaurants = findViewById(R.id.rvRestaurants);
 
         RestaurantListAdapter rvRestaurantsAdapter = new RestaurantListAdapter(db);
         rvRestaurants.setAdapter(rvRestaurantsAdapter);
@@ -77,6 +81,7 @@ public class RestaurantListActivity extends AppCompatActivity {
             public void onClick(View view, int position) {
                 //changes activity to a different one
                 Intent intent = new Intent(RestaurantListActivity.this, ViewRestaurantActivity.class);
+                //intent.putExtra("id", String.valueOf(currentLocation));
                 intent.putExtra("id", view.getTag().toString());
                 //starts the activity associated with the intent
                 startActivity(intent);
@@ -105,7 +110,7 @@ public class RestaurantListActivity extends AppCompatActivity {
             turnOnGPS();
         else {
             getCurrentLocation();
-            getNearbyRestaurants();
+            //getNearbyRestaurants();
         }
     }
 
@@ -119,7 +124,7 @@ public class RestaurantListActivity extends AppCompatActivity {
                 turnOnGPS();
             else {
                 getCurrentLocation();
-                getNearbyRestaurants();
+                //getNearbyRestaurants();
             }
     }
 
@@ -130,11 +135,11 @@ public class RestaurantListActivity extends AppCompatActivity {
         if (requestCode == 2)
             if (resultCode == Activity.RESULT_OK) {
                 getCurrentLocation();
-                getNearbyRestaurants();
+                //getNearbyRestaurants();
             }
     }
 
-    public void getCurrentLocation() {
+    public GeoLocation getCurrentLocation() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(RestaurantListActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -167,6 +172,7 @@ public class RestaurantListActivity extends AppCompatActivity {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         }
+        return currentLocation;
     }
 
     private void turnOnGPS() {
@@ -233,7 +239,9 @@ public class RestaurantListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void getNearbyRestaurants(){
+    public void filterRestaurants(){
+        List<DocumentSnapshot> matchingDocs = new ArrayList<>();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         // Find cities within 50km of current location
         final double radiusInM = 2 * 1000;
 
@@ -251,25 +259,37 @@ public class RestaurantListActivity extends AppCompatActivity {
             tasks.add(q.get());
         }
 
+        this.restaurants = new ArrayList<>();
+
     // Collect all the query results together into a single list
         Tasks.whenAllComplete(tasks)
+
                 .addOnCompleteListener(new OnCompleteListener<List<Task<?>>>() {
                     @Override
                     public void onComplete(@NonNull Task<List<Task<?>>> t) {
-                        List<DocumentSnapshot> matchingDocs = new ArrayList<>();
 
                         for (Task<QuerySnapshot> task : tasks) {
                             QuerySnapshot snap = task.getResult();
-                            for (DocumentSnapshot doc : snap.getDocuments()) {
-                                double lat = doc.getDouble("lat");
-                                double lng = doc.getDouble("lng");
+                            for (DocumentSnapshot document : snap.getDocuments()) {
+                                double lat = document.getDouble("lat");
+                                double lng = document.getDouble("lng");
 
-                                // We have to filter out a few false positives due to GeoHash
+                                List<Table> tables = new ArrayList<>();
+
+                                for(Map<String, Object> entry : (ArrayList<Map<String, Object>>) document.getData().get("tables")) {
+                                    Table table = new Table(((Long) entry.get("seats")).intValue());
+                                    tables.add(table);
+                                }
+
+                                // W    e have to filter out a few false positives due to GeoHash
                                 // accuracy, but most will match
                                 GeoLocation docLocation = new GeoLocation(lat, lng);
                                 double distanceInM = GeoFireUtils.getDistanceBetween(docLocation, currentLocation);
                                 if (distanceInM <= radiusInM) {
-                                    matchingDocs.add(doc);
+
+                                    Restaurant tempRestaurant = new Restaurant(document.getId(), document.getData().get("name").toString(),
+                                  document.getData().get("description").toString(), ((Double) document.getData().get("rating")).floatValue(), tables);
+                                  restaurants.add(tempRestaurant);
                                 }
                             }
                         }
