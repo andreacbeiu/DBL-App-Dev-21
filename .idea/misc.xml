@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-<<<<<<< Updated upstream
         <entry key="..\:/Users/20201378/AndroidStudioProjects/DBL-App-Dev-21/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.26" />
         <entry key="..\:/Users/20201378/AndroidStudioProjects/DBL-App-Dev-21/app/src/main/res/drawable/ic_launcher_background.xml" value="0.5475" />
         <entry key="..\:/Users/20201378/AndroidStudioProjects/DBL-App-Dev-21/app/src/main/res/layout-w1240dp/activity_registration.xml" value="0.35609103078982596" />
@@ -27,13 +26,12 @@
         <entry key="..\:/Users/hugov/StudioProjects/DBL-App-Dev-21/app/src/main/res/drawable/ic_launcher_background.xml" value="0.218" />
         <entry key="..\:/Users/hugov/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_restaurant_edit.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hugov/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_restaurant_main.xml" value="0.36666666666666664" />
->>>>>>> main
         <entry key="..\:/Users/hugov/StudioProjects/DBL-App-Dev-21/app/src/main/res/layout/activity_view_restaurant.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_14" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
