@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.ui_screens.R;
 import com.example.ui_screens.restaurant_list.RestaurantListActivity;
+import com.example.ui_screens.restaurants.RestaurantLoginActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
@@ -31,6 +32,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
     String preferreddate, preferredtime, str_nrpeople, str_message;
     EditText nrpeople, message;
     TextView map;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
     //Top bar menu inflater
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.customer_menu, menu);
+        getMenuInflater().inflate(R.menu.search_menu, menu);
         getMenuInflater().inflate(R.menu.options_menu, menu);
         return true;
     }
@@ -74,14 +76,10 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
             case R.id.action_search:
                 startActivity(new Intent(this, SearchPageActivity.class));
                 return true;
-            case R.id.nearbyrestaurants:
-                startActivity(new Intent(this, RestaurantListActivity.class));
-                return true;
             case R.id.account:
                 startActivity(new Intent(this, RestaurantLoginActivity.class));
                 return true;
-            case R.id.chat:
-                startActivity(new Intent(this, RestaurantLoginActivity.class));
+            case R.id.restaurantLogOut:
                 return true;
         }
         return super.onOptionsItemSelected(item);

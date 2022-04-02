@@ -1,4 +1,4 @@
-package com.example.ui_screens.customers;
+package com.example.ui_screens.restaurants;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,10 +12,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ui_screens.R;
-import com.example.ui_screens.restaurant_list.RestaurantListActivity;
-import com.example.ui_screens.restaurants.RestaurantEditActivity;
-import com.example.ui_screens.restaurants.RestaurantMainActivity;
-import com.example.ui_screens.restaurants.RestaurantRegisterActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

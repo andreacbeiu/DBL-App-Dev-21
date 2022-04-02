@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.example.ui_screens.R;
 import com.example.ui_screens.restaurant_list.RestaurantListActivity;
-import com.example.ui_screens.restaurants.RestaurantMainActivity;
+import com.example.ui_screens.restaurants.RestaurantLoginActivity;
 //import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {

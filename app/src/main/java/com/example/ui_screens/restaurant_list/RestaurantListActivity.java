@@ -24,7 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ui_screens.customers.MainActivity;
 import com.example.ui_screens.R;
-import com.example.ui_screens.customers.RestaurantLoginActivity;
+import com.example.ui_screens.customers.SearchPageActivity;
+import com.example.ui_screens.restaurants.RestaurantLoginActivity;
 import com.example.ui_screens.customers.ViewRestaurantActivity;
 import com.example.ui_screens.data.RecyclerTouchListener;
 import com.example.ui_screens.data.Restaurant;
@@ -48,7 +49,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.example.ui_screens.data.Restaurant;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -93,14 +94,6 @@ public class RestaurantListActivity extends AppCompatActivity {
 
             }
         }));
-    }
-
-    //Top bar menu inflater
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.customer_menu, menu);
-        getMenuInflater().inflate(R.menu.options_menu, menu);
-        return true;
     }
 
     @Override
@@ -219,21 +212,25 @@ public class RestaurantListActivity extends AppCompatActivity {
         return enabled;
     }
 
+    //Top bar menu inflater
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
     //Handles actions in the topbar menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_search:
-                startActivity(new Intent(this, MainActivity.class));
-                return true;
-            case R.id.nearbyrestaurants:
-                startActivity(new Intent(this, RestaurantListActivity.class));
+                startActivity(new Intent(this, SearchPageActivity.class));
                 return true;
             case R.id.account:
                 startActivity(new Intent(this, RestaurantLoginActivity.class));
                 return true;
-            case R.id.chat:
-                startActivity(new Intent(this, RestaurantLoginActivity.class));
+            case R.id.restaurantLogOut:
                 return true;
         }
         return super.onOptionsItemSelected(item);

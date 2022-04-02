@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="36dp"
-        android:onClick="displayResult"
+        android:onClick="displayQuery"
         android:text="Search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18" />

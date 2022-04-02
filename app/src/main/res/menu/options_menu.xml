@@ -2,19 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/nearbyrestaurants"
-        android:title="Nearby Restaurants" />
-
-    <item
         android:id="@+id/account"
         android:title="Account" />
 
     <item
-        android:id="@+id/chat"
-        android:title="Chat" />
-
-    <item
-        android:id="@+id/restaurantSignOut"
-        android:title="Sign Out" />
+        android:id="@+id/restaurantLogOut"
+        android:title="Log Out" />
 
 </menu>
