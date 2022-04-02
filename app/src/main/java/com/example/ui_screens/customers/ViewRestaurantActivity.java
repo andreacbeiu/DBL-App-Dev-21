@@ -24,18 +24,29 @@ import com.example.ui_screens.R;
 import com.example.ui_screens.restaurant_list.RestaurantListActivity;
 import com.example.ui_screens.restaurants.RestaurantLoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ViewRestaurantActivity extends AppCompatActivity implements View.OnClickListener {
 
     int mYear, mMonth, mDay, mHour, mMinute;
-    String preferreddate, preferredtime, str_nrpeople, str_message;
+    HashMap<String, String> reservation = new HashMap<>();
+    //reservation.put("message", str_message);
+    //reservation.put("restaurant", ReservationRestaurant);
+    //reservation.put("date", preferreddate);
+    //reservation.put("time", preferredtime);
+    //reservation.put("table", str_nrpeople);
+    String preferreddate, preferredtime, str_nrpeople, str_message, ReservationRestaurant;
     EditText nrpeople, message;
     TextView map;
 
@@ -50,14 +61,22 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
         //selecting book button + adding click listener
         Button bookbutton = findViewById(R.id.bookbutton);
         bookbutton.setOnClickListener(this);
+        //reservation = null;
         preferreddate = "25-03-2022";
         preferredtime = "23:51";
         str_nrpeople = "0";
         str_message = "";
+        reservation.put("message", str_message);
+        reservation.put("restaurant", ReservationRestaurant);
+        reservation.put("date", preferreddate);
+        reservation.put("time", preferredtime);
+        reservation.put("table", str_nrpeople);
         map = (TextView) findViewById(R.id.textView16);
 
 
         String restaurantId = getIntent().getExtras().getString("id");
+        //passing restaurant ID to reservation handler
+        ReservationRestaurant = restaurantId;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("restaurants")
                 .document(restaurantId)
@@ -166,8 +185,34 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
+                        //creating string vars for booking data
                         str_nrpeople = nrpeople.getText().toString();
                         str_message = message.getText().toString();
+
+                        //adding values to the hashmap
+                        reservation.put("message", str_message);
+                        reservation.put("restaurant", ReservationRestaurant);
+                        reservation.put("date", preferreddate);
+                        reservation.put("time", preferredtime);
+                        reservation.put("table", str_nrpeople);
+
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        db.collection("reservation")
+                                .add(reservation)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Toast.makeText(getApplicationContext(), "You have booked a table!", Toast.LENGTH_LONG).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getApplicationContext(),"There was an error!",Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+
 
                         Toast.makeText(getApplicationContext(), "You have booked a table!", Toast.LENGTH_LONG).show();
 
@@ -184,12 +229,9 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
         //create the dialog pop-up
         AlertDialog bookingDialog = dialog.create();
         bookingDialog.show();
+
     }
 
-    public void onRewardsClick(View view) {
-        Intent intent = new Intent(this, RewardListActivity.class);
-        startActivity(intent);
-    }
 
 
 }
