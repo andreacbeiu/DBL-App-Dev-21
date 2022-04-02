@@ -54,6 +54,8 @@ public class CustomerLoginActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
             startActivity(new Intent(CustomerLoginActivity.this, RegistrationActivity.class));
+        } else {
+            startActivity(new Intent(CustomerLoginActivity.this, RestaurantListActivity.class));
         }
     }
     public void openRegistration(View view) {

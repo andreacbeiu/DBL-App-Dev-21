@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ui_screens.customers.AccountActivity;
 import com.example.ui_screens.customers.MainActivity;
 import com.example.ui_screens.R;
 import com.example.ui_screens.customers.SearchPageActivity;
@@ -228,7 +229,7 @@ public class RestaurantListActivity extends AppCompatActivity {
                 startActivity(new Intent(this, SearchPageActivity.class));
                 return true;
             case R.id.account:
-                startActivity(new Intent(this, RestaurantLoginActivity.class));
+                startActivity(new Intent(this, AccountActivity.class));
                 return true;
             case R.id.restaurantLogOut:
                 return true;

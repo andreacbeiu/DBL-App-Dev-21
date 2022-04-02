@@ -1,5 +1,6 @@
 package com.example.ui_screens.customers;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,7 +23,12 @@ import android.widget.Toast;
 import com.example.ui_screens.R;
 import com.example.ui_screens.restaurant_list.RestaurantListActivity;
 import com.example.ui_screens.restaurants.RestaurantLoginActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
 
@@ -32,6 +38,8 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
     String preferreddate, preferredtime, str_nrpeople, str_message;
     EditText nrpeople, message;
     TextView map;
+
+    FirebaseAuth mAuth;
 
 
     @Override
@@ -77,10 +85,11 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                 startActivity(new Intent(this, SearchPageActivity.class));
                 return true;
             case R.id.account:
-                startActivity(new Intent(this, RestaurantLoginActivity.class));
+                startActivity(new Intent(this, AccountActivity.class));
                 return true;
             case R.id.restaurantLogOut:
-                return true;
+                mAuth.getInstance().signOut();
+                startActivity(new Intent(this, MainActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
