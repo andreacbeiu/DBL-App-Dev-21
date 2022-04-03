@@ -46,6 +46,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -60,6 +61,8 @@ public class RestaurantListActivity extends AppCompatActivity {
     private static final int REQUEST_CHECK_SETTINGS = 10001;
     GeoLocation currentLocation;
     private List<Restaurant> restaurants = new ArrayList<>();
+
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -232,7 +235,8 @@ public class RestaurantListActivity extends AppCompatActivity {
                 startActivity(new Intent(this, AccountActivity.class));
                 return true;
             case R.id.restaurantLogOut:
-                return true;
+                mAuth.getInstance().signOut();
+                startActivity(new Intent(this, MainActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
