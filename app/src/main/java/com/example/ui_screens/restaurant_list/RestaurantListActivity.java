@@ -240,8 +240,7 @@ public class RestaurantListActivity extends AppCompatActivity {
                 return true;
             case R.id.restaurantLogOut:
                 mAuth.getInstance().signOut();
-                startActivity(new Intent(this, MainActivity.class));
-                finish();
+                this.finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);

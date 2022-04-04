@@ -21,27 +21,20 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.ui_screens.R;
-import com.example.ui_screens.restaurant_list.RestaurantListActivity;
-import com.example.ui_screens.restaurants.RestaurantLoginActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ViewRestaurantActivity extends AppCompatActivity implements View.OnClickListener {
 
     int mYear, mMonth, mDay, mHour, mMinute;
     HashMap<String, String> reservation = new HashMap<>();
-    String preferreddate, preferredtime, str_nrpeople, str_message, ReservationRestaurant, str_userID;
+    String preferredDate, preferredTime, str_nrpeople, str_message, ReservationRestaurant, str_userID;
     EditText nrpeople, message;
     TextView map;
 
@@ -59,14 +52,14 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
         Button bookbutton = findViewById(R.id.bookbutton);
         bookbutton.setOnClickListener(this);
         //setting values for reservation data input
-        preferreddate = "25-03-2022";
-        preferredtime = "23:51";
+        preferredDate = "25-03-2022";
+        preferredTime = "23:51";
         str_nrpeople = "0";
         str_message = "";
         reservation.put("message", str_message);
         reservation.put("restaurant", ReservationRestaurant);
-        reservation.put("date", preferreddate);
-        reservation.put("time", preferredtime);
+        reservation.put("date", preferredDate);
+        reservation.put("time", preferredTime);
         reservation.put("table", str_nrpeople);
         reservation.put("userID", str_userID);
         map = (TextView) findViewById(R.id.textView16);
@@ -85,6 +78,13 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                         ReservationRestaurant = (task.getResult().getData().get("name").toString());
                     }
                 });
+    }
+
+    //close activity upon leaving through back button
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
 
     //Top bar menu inflater
@@ -107,8 +107,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                 return true;
             case R.id.restaurantLogOut:
                 mAuth.getInstance().signOut();
-                startActivity(new Intent(this, MainActivity.class));
-                finish();
+                this.finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -138,7 +137,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
 
-                        preferreddate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                        preferredDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
                         //txtDate.setText(preferreddate);
                         //Toast.makeText(getApplicationContext(),"You have made a booking!",Toast.LENGTH_LONG).show();
                         pickTimeDialog();
@@ -162,14 +161,14 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
                         if (hourOfDay < 10) {
-                            preferredtime = "0" + hourOfDay;
+                            preferredTime = "0" + hourOfDay;
                         } else {
-                            preferredtime = hourOfDay + "";
+                            preferredTime = hourOfDay + "";
                         }
                         if (minute < 10) {
-                            preferredtime = preferredtime + ":0" + minute;
+                            preferredTime = preferredTime + ":0" + minute;
                         } else {
-                            preferredtime = preferredtime + ":" + minute;
+                            preferredTime = preferredTime + ":" + minute;
                         }
 
                         confirmBookingDialog();
@@ -195,6 +194,8 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
                         //creating string vars for booking data
                         str_nrpeople = nrpeople.getText().toString();
                         str_message = message.getText().toString();
@@ -202,12 +203,12 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                         //adding values to the hashmap
                         reservation.put("message", str_message);
                         reservation.put("restaurant", ReservationRestaurant);
-                        reservation.put("date", preferreddate);
-                        reservation.put("time", preferredtime);
+                        reservation.put("date", preferredDate);
+                        reservation.put("time", preferredTime);
                         reservation.put("table", str_nrpeople);
                         reservation.put("userID", str_userID);
 
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
                         db.collection("reservation")
                                 .add(reservation)
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -222,10 +223,6 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                                         Toast.makeText(getApplicationContext(),"There was an error!",Toast.LENGTH_LONG).show();
                                     }
                                 });
-
-
-
-                        //Toast.makeText(getApplicationContext(), "You have booked a table!", Toast.LENGTH_LONG).show();
 
                     }
                 });

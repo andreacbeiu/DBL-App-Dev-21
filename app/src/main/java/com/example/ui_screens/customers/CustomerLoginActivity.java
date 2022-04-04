@@ -65,6 +65,8 @@ public class CustomerLoginActivity extends AppCompatActivity {
        loginUser();
     }
 
+    public void finishLogin() {this.finish();}
+
     public void loginUser(){
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
@@ -88,6 +90,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Toast.makeText(CustomerLoginActivity.this, "User Logged In Successfully", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(CustomerLoginActivity.this, RestaurantListActivity.class));
+                    finishLogin();
                 } else {
                     Toast.makeText(CustomerLoginActivity.this, "User Login Failed", Toast.LENGTH_SHORT).show();
                 }
