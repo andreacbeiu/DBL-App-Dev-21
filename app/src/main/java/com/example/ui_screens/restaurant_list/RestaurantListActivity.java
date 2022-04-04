@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ui_screens.customers.AccountActivity;
+import com.example.ui_screens.customers.CustomerLoginActivity;
 import com.example.ui_screens.customers.MainActivity;
 import com.example.ui_screens.R;
 import com.example.ui_screens.customers.SearchPageActivity;
@@ -51,6 +52,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +65,8 @@ public class RestaurantListActivity extends AppCompatActivity {
     private static final int REQUEST_CHECK_SETTINGS = 10001;
     GeoLocation currentLocation;
     private List<Restaurant> restaurants = new ArrayList<>();
+
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -232,12 +239,15 @@ public class RestaurantListActivity extends AppCompatActivity {
                 startActivity(new Intent(this, AccountActivity.class));
                 return true;
             case R.id.restaurantLogOut:
+                mAuth.getInstance().signOut();
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void filterRestaurants(){
+    public void filterRestaurants() {
         List<DocumentSnapshot> matchingDocs = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         // Find cities within 50km of current location

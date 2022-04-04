@@ -33,7 +33,7 @@
         android:id="@+id/tvUserEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="72dp"
         android:text="email@email.com"
         android:textSize="20sp"
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="36dp"
         android:text="Your password is:"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,10 +55,43 @@
         android:id="@+id/tvUserPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
         android:text="********"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/tvYourPasswordIs"
         app:layout_constraintTop_toBottomOf="@+id/tvYourEmailIs" />
+
+    <TextView
+        android:id="@+id/tvYourReservations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="36dp"
+        android:text="Your Reservations:"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvYourPasswordIs" />
+
+    <TextView
+        android:id="@+id/tvReservation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:text="Hello"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/tvYourReservations"
+        app:layout_constraintTop_toBottomOf="@+id/tvYourPasswordIs" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="48dp"
+        android:onClick="displayRestaurant"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvYourReservations" />
 </androidx.constraintlayout.widget.ConstraintLayout>
