@@ -21,14 +21,21 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.ui_screens.R;
+import com.example.ui_screens.data.Restaurant;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ViewRestaurantActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,6 +46,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
     TextView map;
 
     FirebaseAuth mAuth;
+    String str_restaurantId = new String("");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +74,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
 
 
         String restaurantId = getIntent().getExtras().getString("id");
-        //passing restaurant ID to reservation handler
-        ReservationRestaurant = restaurantId;
+        str_restaurantId = restaurantId;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("restaurants")
                 .document(restaurantId)
@@ -193,27 +200,77 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
         dialog.setPositiveButton("BOOK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-
+                        //initialise all query check variables
+                        AtomicBoolean isTableAvailable = new AtomicBoolean();
+                        AtomicReference<Boolean> isTableReserved = new AtomicReference<>(new Boolean(false));
+                        //initialise query counter
+                        AtomicInteger entrycounter = new AtomicInteger(0);
+                        AtomicReference<String> str_entrycounter = new AtomicReference<>("0");
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        FirebaseFirestore db2 = FirebaseFirestore.getInstance();
+                        FirebaseFirestore db3 = FirebaseFirestore.getInstance();
 
                         //creating string vars for booking data
                         str_nrpeople = nrpeople.getText().toString();
+                        int int_nrpeople = Integer.parseInt(str_nrpeople);
                         str_message = message.getText().toString();
 
-                        //adding values to the hashmap
-                        reservation.put("message", str_message);
-                        reservation.put("restaurant", ReservationRestaurant);
-                        reservation.put("date", preferredDate);
-                        reservation.put("time", preferredTime);
-                        reservation.put("table", str_nrpeople);
-                        reservation.put("userID", str_userID);
+                        //querying the restaurant tables
+                        db.collection("restaurants")
+                                .whereEqualTo("name", ReservationRestaurant)
+                                .get()
+                                .addOnCompleteListener(task -> {
+                                    if(task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            for(Map<String, Object> entry : (ArrayList<Map<String, Object>>) document.getData().get("tables")) {
+                                                isTableReserved.set(false);
+                                                if (((Long) entry.get("seats")).intValue() >= int_nrpeople) {
+                                                    //querying the reservations
+                                                    db2.collection("reservations")
+                                                            .whereEqualTo("restaurant", str_restaurantId)
+                                                            .get()
+                                                            .addOnCompleteListener(task2 -> {
+                                                                if(task2.isSuccessful()) {
+                                                                    for (QueryDocumentSnapshot document2 : task2.getResult()) {
+                                                                        if(document2.getData().get("time") == preferredTime &&
+                                                                            document2.getData().get("date") == preferredDate &&
+                                                                            document2.getData().get("table") == str_entrycounter) {
+                                                                                isTableReserved.set(true);
+                                                                        }
+                                                                    }
+                                                                }
+                                                            });
+                                                    if (isTableReserved.get()) { isTableAvailable.set(false); System.out.println("I set it false");} else { isTableAvailable.set(true); System.out.println("I set it true"); reservation.put("table", str_entrycounter.toString()); }
+                                                }
+                                                entrycounter.getAndIncrement();
+                                                str_entrycounter.set(Integer.toString(entrycounter.get()));
+                                            }
 
+                                        }
+                                    }
 
-                        db.collection("reservation")
+                                    if(isTableAvailable.get()) {
+                                        System.out.println("printed if");
+                                        //adding values to hashmap
+                                        reservation.put("message", str_message);
+                                        reservation.put("restaurant", str_restaurantId);
+                                        reservation.put("date", preferredDate);
+                                        reservation.put("time", preferredTime);
+                                        reservation.put("userID", str_userID);
+
+                                    } else {
+                                        Toast.makeText(getApplicationContext(),"No tables available at that time!",Toast.LENGTH_LONG).show();
+                                    }
+
+                                });
+
+                        //adding reservation to database
+                        db3.collection("reservation")
                                 .add(reservation)
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                     @Override
                                     public void onSuccess(DocumentReference documentReference) {
+                                        System.out.println("printed addition to collection");
                                         Toast.makeText(getApplicationContext(), "You have booked a table!", Toast.LENGTH_LONG).show();
                                     }
                                 })
