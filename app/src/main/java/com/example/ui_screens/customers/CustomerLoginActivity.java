@@ -52,17 +52,13 @@ public class CustomerLoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) {
-            startActivity(new Intent(CustomerLoginActivity.this, RegistrationActivity.class));
-        } else {
+        if (currentUser != null) {
             startActivity(new Intent(CustomerLoginActivity.this, RestaurantListActivity.class));
         }
     }
+    //opens up registration page
     public void openRegistration(View view) {
-        //sets the intent of the function: changing the activity
-        Intent intent = new Intent(this, RegistrationActivity.class);
-        //starts the activity associated with the intent
-        startActivity(intent);
+        startActivity(new Intent(CustomerLoginActivity.this, RegistrationActivity.class));
     }
 
     public void loginClicked(View view) {

@@ -41,27 +41,24 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
 
     int mYear, mMonth, mDay, mHour, mMinute;
     HashMap<String, String> reservation = new HashMap<>();
-    //reservation.put("message", str_message);
-    //reservation.put("restaurant", ReservationRestaurant);
-    //reservation.put("date", preferreddate);
-    //reservation.put("time", preferredtime);
-    //reservation.put("table", str_nrpeople);
-    String preferreddate, preferredtime, str_nrpeople, str_message, ReservationRestaurant;
+    String preferreddate, preferredtime, str_nrpeople, str_message, ReservationRestaurant, str_userID;
     EditText nrpeople, message;
     TextView map;
 
     FirebaseAuth mAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_restaurant);
 
+        mAuth = FirebaseAuth.getInstance();
+        str_userID = mAuth.getCurrentUser().getUid();
+
         //selecting book button + adding click listener
         Button bookbutton = findViewById(R.id.bookbutton);
         bookbutton.setOnClickListener(this);
-        //reservation = null;
+        //setting values for reservation data input
         preferreddate = "25-03-2022";
         preferredtime = "23:51";
         str_nrpeople = "0";
@@ -71,6 +68,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
         reservation.put("date", preferreddate);
         reservation.put("time", preferredtime);
         reservation.put("table", str_nrpeople);
+        reservation.put("userID", str_userID);
         map = (TextView) findViewById(R.id.textView16);
 
 
@@ -84,6 +82,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         ((TextView)findViewById(R.id.tvViewRestaurantName)).setText(task.getResult().getData().get("name").toString());
+                        ReservationRestaurant = (task.getResult().getData().get("name").toString());
                     }
                 });
     }
@@ -109,6 +108,8 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
             case R.id.restaurantLogOut:
                 mAuth.getInstance().signOut();
                 startActivity(new Intent(this, MainActivity.class));
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -160,8 +161,17 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
+                        if (hourOfDay < 10) {
+                            preferredtime = "0" + hourOfDay;
+                        } else {
+                            preferredtime = hourOfDay + "";
+                        }
+                        if (minute < 10) {
+                            preferredtime = preferredtime + ":0" + minute;
+                        } else {
+                            preferredtime = preferredtime + ":" + minute;
+                        }
 
-                        preferredtime = hourOfDay + ":" + minute;
                         confirmBookingDialog();
                     }
                 }, mHour, mMinute, false);
@@ -195,6 +205,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                         reservation.put("date", preferreddate);
                         reservation.put("time", preferredtime);
                         reservation.put("table", str_nrpeople);
+                        reservation.put("userID", str_userID);
 
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         db.collection("reservation")
@@ -214,7 +225,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
 
 
 
-                        Toast.makeText(getApplicationContext(), "You have booked a table!", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "You have booked a table!", Toast.LENGTH_LONG).show();
 
                     }
                 });
