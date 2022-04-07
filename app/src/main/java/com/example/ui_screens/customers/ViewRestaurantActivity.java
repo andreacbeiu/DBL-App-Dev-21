@@ -73,19 +73,8 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
         String restaurantId = getIntent().getExtras().getString("id");
         //passing restaurant ID to reservation handler
         ReservationRestaurant = restaurantId;
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("restaurants")
-                .document(restaurantId)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
-                        ((TextView)findViewById(R.id.tvViewRestaurantName)).setText(task.getResult().getData().get("name").toString());
-                        ReservationRestaurant = (task.getResult().getData().get("name").toString());
-                    }
-                });
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("images/" + restaurantId+".jpg");
-        System.out.println("images/" + getIntent().getExtras().getString("id")+".jpg");
         ImageView imageView = findViewById(R.id.ivViewRestaurant);
 
         final long ONE_MEGABYTE = 1024*1024;
