@@ -77,31 +77,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword3" />
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:showText="true"
-        android:textOff="Employee"
-        android:textOn="Manager"
-        android:thumbTextPadding="@dimen/activity_horizontal_margin"
-        android:thumbTint="@color/browser_actions_bg_grey"
-        android:trackTint="@color/browser_actions_bg_grey"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView24" />
+<!--    <Switch-->
+<!--        android:id="@+id/switch1"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="4dp"-->
+<!--        android:showText="true"-->
+<!--        android:textOff="Employee"-->
+<!--        android:textOn="Manager"-->
+<!--        android:thumbTextPadding="@dimen/activity_horizontal_margin"-->
+<!--        android:thumbTint="@color/browser_actions_bg_grey"-->
+<!--        android:trackTint="@color/browser_actions_bg_grey"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.497"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView24" />-->
 
     <Button
         android:id="@+id/submit_restaurant_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
         android:text="Submit"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch1" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName11" />
 
     <TextView
         android:id="@+id/textView22"
@@ -136,27 +136,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
-    <TextView
-        android:id="@+id/textView24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:text="Select role:"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName11" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView24"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="68dp"-->
+<!--        android:text="Select role:"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName11" />-->
 
-    <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:ems="10"
-        android:hint="Token for Managers"
-        android:inputType="textPassword"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName11"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName11"
-        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+<!--    <EditText-->
+<!--        android:id="@+id/editTextTextPassword"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="11dp"-->
+<!--        android:ems="10"-->
+<!--        android:hint="Token for Managers"-->
+<!--        android:inputType="textPassword"-->
+<!--        android:visibility="visible"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName11"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName11"-->
+<!--        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RestaurantLoginActivity extends AppCompatActivity {
 
@@ -74,8 +76,21 @@ public class RestaurantLoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(RestaurantLoginActivity.this, "User Logged In Successfully", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RestaurantLoginActivity.this, RestaurantEditActivity.class));
+                    System.out.println("ID " + task.getResult().getUser().getUid());
+                    FirebaseFirestore.getInstance()
+                            .collection("restaurant_users")
+                            .document(task.getResult().getUser().getUid())
+                            .get()
+                            .addOnCompleteListener(task1 -> {
+                                if(task1.isSuccessful()) {
+                                    Toast.makeText(RestaurantLoginActivity.this, "User Logged In Successfully", Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(RestaurantLoginActivity.this, RestaurantMainActivity.class);
+                                    i.putExtra("resId", task1.getResult().getData().get("resId").toString());
+                                    startActivity(i);
+                                } else {
+                                    Toast.makeText(RestaurantLoginActivity.this, "Could not sign in", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 } else {
                     Toast.makeText(RestaurantLoginActivity.this, "User Login Failed", Toast.LENGTH_SHORT).show();
                 }
