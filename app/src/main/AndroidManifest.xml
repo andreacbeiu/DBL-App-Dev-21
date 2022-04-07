@@ -18,9 +18,6 @@
             android:name=".customers.AccountActivity"
             android:exported="false" />
         <activity
-            android:name=".customers.RewardListActivity"
-            android:exported="false" />
-        <activity
             android:name=".customers.SearchPageActivity"
             android:exported="false" />
         <activity
