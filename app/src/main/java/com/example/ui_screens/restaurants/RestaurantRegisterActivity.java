@@ -128,7 +128,7 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
 
         HashMap<String, String> user = new HashMap<String, String>();
 
-        user.put("name", name);
+        user.put("name", email);
         user.put("restaurant", restaurant);
 
         if (manager) {
@@ -149,24 +149,24 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
 
 
 
-        db.collection("restaurant_users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Log.d("BookIT", "DocumentSnapshot written with ID " + documentReference.getId());
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w("BookIt", "Error adding document", e);
-            }
-        });
-
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+
+                    db.collection("restaurant_users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d("BookIT", "DocumentSnapshot written with ID " + documentReference.getId());
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("BookIt", "Error adding document", e);
+                            }
+                    });
                     Toast.makeText(RestaurantRegisterActivity.this, "User Registered Successfully", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RestaurantRegisterActivity.this, RestaurantEditActivity.class));
+                    startActivity(new Intent(RestaurantRegisterActivity.this, RestaurantMainActivity.class));
                 } else {
                     Toast.makeText(RestaurantRegisterActivity.this, "Registration Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }

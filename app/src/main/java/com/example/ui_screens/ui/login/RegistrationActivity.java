@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,10 +29,20 @@ import com.example.ui_screens.customers.CustomerLoginActivity;
 import com.example.ui_screens.R;
 import com.example.ui_screens.databinding.ActivityRegistrationBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -40,6 +51,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private Button button;
     private EditText editTextEmail, editTextPassword, editTextPhone;
     private ProgressBar progressBar;
+    private FirebaseFirestore db;
     FirebaseAuth mAuth;
 
 
@@ -47,6 +59,8 @@ public class RegistrationActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
+        db = FirebaseFirestore.getInstance();
 
 
         editTextEmail = (EditText) findViewById(R.id.username);
@@ -119,14 +133,54 @@ public class RegistrationActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
+        HashMap<String, String> user = new HashMap<String, String>();
+
+        user.put("name", email);
+        user.put("restaurant", "");
+        user.put("type", "customer");
 
 
 
 
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+        CollectionReference users = db.collection("restaurant_users");
+
+        Query ref = users.whereEqualTo("type", Arrays.asList("manager", "employee"));
+
+        ref.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String email_id = document.getString("name");
+                        if (email_id.equals(email)) {
+                            Toast.makeText(RegistrationActivity.this, "Email already registered with Restaraunt account type", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+                else {
+                    Log.d("BookIt", "Error getting documents: ", task.getException());
+                }
+            }
+        });
+
+
+
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        db.collection("restaurant_users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d("BookIT", "DocumentSnapshot written with ID " + documentReference.getId());
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("BookIt", "Error adding document", e);
+                            }
+                        });
                         Toast.makeText(RegistrationActivity.this, "User Registered Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegistrationActivity.this, CustomerLoginActivity.class));
                     } else {
