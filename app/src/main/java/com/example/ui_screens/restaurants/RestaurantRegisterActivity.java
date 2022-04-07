@@ -26,7 +26,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class RestaurantRegisterActivity extends AppCompatActivity {
 
@@ -51,8 +53,6 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
         editTextPasswordRepeat = (EditText) findViewById(R.id.editTextTextPassword3);
         editTextName = (EditText) findViewById(R.id.editTextTextPersonName10);
         editTextRestaurant = (EditText) findViewById(R.id.editTextTextPersonName11);
-        editTextToken = (EditText) findViewById(R.id.editTextTextPassword);
-        aSwitch = (Switch) findViewById(R.id.switch1);
 
 
 
@@ -74,11 +74,7 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString();
         String password_repeat = editTextPasswordRepeat.getText().toString();
         String name = editTextName.getText().toString();
-        String token = editTextToken.getText().toString();
-        Boolean manager = aSwitch.isChecked();
         String restaurant = editTextRestaurant.getText().toString();
-
-        String token_mcd = "subwayisbetter";
 
         if (email.isEmpty()) {
             editTextEmail.setError("Email Cannot Be Empty");
@@ -124,54 +120,48 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
         }
 
 
+        Map<String, Object> newRes = new HashMap<>();
+        newRes.put("description", "");
+        newRes.put("location", null);
+        newRes.put("name", restaurant);
+        newRes.put("rating", 4.5);
+        newRes.put("tables", new ArrayList());
+
+        db.collection("restaurants")
+                .add(newRes)
+                .addOnSuccessListener(documentReference -> {
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("name", name);
+                    user.put("resId", documentReference.getId());
+                    user.put("type", "manager");
+
+                    mAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(task -> {
+                                if(task.isSuccessful()) {
+                                    db.collection("restaurant_users")
+                                            .document(task.getResult().getUser().getUid())
+                                            .set(user)
+                                            .addOnSuccessListener(userDocRef -> {
+                                                Toast.makeText(this, "Successfully created account", Toast.LENGTH_SHORT).show();
+                                                Intent i = new Intent(this, RestaurantMainActivity.class);
+                                                i.putExtra("resId", documentReference.getId());
+                                                startActivity(i);
+                                            }).addOnFailureListener(unused -> {
+                                        Toast.makeText(this, "Could not save user data", Toast.LENGTH_SHORT).show();
+                                        task.getResult().getUser().delete();
+                                        documentReference.delete();
+                                    });
+                                } else {
+                                    Toast.makeText(this, "Could not create account", Toast.LENGTH_SHORT).show();
+                                    documentReference.delete();
+                                }
+                            });
 
 
-        HashMap<String, String> user = new HashMap<String, String>();
-
-        user.put("name", email);
-        user.put("restaurant", restaurant);
-
-        if (manager) {
-            if (token.isEmpty() && !restaurant.isEmpty()) {
-                editTextPasswordRepeat.setError("Need Manager Specific Token for " + restaurant);
-                editTextPasswordRepeat.requestFocus();
-                return;
-            } else if (!restaurant.equals("McDonalds")) {
-                editTextPasswordRepeat.setError("Need Manager Specific Token for " + restaurant);
-                editTextPasswordRepeat.requestFocus();
-                return;
-            } else if (restaurant.equals("McDonalds") && token.equals(token_mcd)) {
-                user.put("type", "manager");
-            }
-        } else {
-            user.put("type", "employee");
-        }
-
-
-
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-
-                    db.collection("restaurant_users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d("BookIT", "DocumentSnapshot written with ID " + documentReference.getId());
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("BookIt", "Error adding document", e);
-                            }
-                    });
-                    Toast.makeText(RestaurantRegisterActivity.this, "User Registered Successfully", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RestaurantRegisterActivity.this, RestaurantMainActivity.class));
-                } else {
-                    Toast.makeText(RestaurantRegisterActivity.this, "Registration Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+                })
+                .addOnFailureListener(unused -> {
+                    Toast.makeText(this, "Could not create restaurant", Toast.LENGTH_SHORT).show();
+                });
 
     }
 }

@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ui_screens.R;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -31,7 +33,7 @@ import java.util.Map;
 
 public class RestaurantEditActivity extends AppCompatActivity {
 
-    private final String id = "4biUSxpvAawgmEUKuh2A";
+    private String id;
     private Map<String, Object> data;
     FirebaseFirestore db;
     EditText etName;
@@ -42,6 +44,8 @@ public class RestaurantEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_edit);
+
+        id = getIntent().getStringExtra("resId");
 
         final StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" + id + ".jpg");
         final ImageView restIV = (ImageView)findViewById(R.id.ivEditRestaurantImage);
