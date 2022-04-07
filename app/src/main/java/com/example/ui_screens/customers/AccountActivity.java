@@ -31,7 +31,6 @@ public class AccountActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser user;
     FirebaseFirestore db;
-    Query query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +83,11 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     public void displayRestaurant(View v) {
-        Reservation.setText(reservations.get(0));
+        if (reservations.size() <= 0) {
+            Reservation.setText("You have no reservations!");
+        } else {
+            Reservation.setText(reservations.get(0));
+        }
     }
 
 }
