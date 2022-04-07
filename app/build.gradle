@@ -34,6 +34,14 @@ android {
     buildFeatures {
         viewBinding true
     }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            def appName = "BookIt"
+            def date = new Date()
+            def formattedDate = date.format('MMM-dd-yyyy')
+            outputFileName = appName + formattedDate + "-${variant.versionName}-${variant.versionCode}.apk"
+        }
+    }
 }
 
 dependencies {
