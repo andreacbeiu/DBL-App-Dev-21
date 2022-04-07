@@ -24,6 +24,7 @@ public class ViewRestaurantActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_restaurant);
 
         String restaurantId = getIntent().getExtras().getString("id");
+        Log.d("BookIt", restaurantId);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("restaurants")
                 .document(restaurantId)
@@ -35,19 +36,6 @@ public class ViewRestaurantActivity extends AppCompatActivity {
                     }
                 });
 
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("images/" + getIntent().getExtras().getString("id")+".jpg");
-        System.out.println(getIntent().getStringExtra("id"));
-        ImageView imageView = findViewById(R.id.ivViewRestaurant);
 
-        final long ONE_MEGABYTE = 1024*1024;
-        storageRef.getBytes(ONE_MEGABYTE * 2).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                imageView.setImageBitmap(bmp);
-            }
-        }).addOnFailureListener(e -> {
-            imageView.setImageDrawable(getDrawable(R.drawable.default_restaurant));
-        });
     }
 }
