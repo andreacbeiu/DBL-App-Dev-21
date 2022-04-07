@@ -255,8 +255,9 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                             if (restaurantTables.get(i) >= int_nrpeople) {
                                 //for each table, whose seats can accommodate the nr of people, check if a reservation has that table
                                 for(Reservation r : ReservationsToCheck) {
-                                    if(r.getDate() == preferredDate && r.getTime() == preferredTime && r.getTable() == Integer.toString(i)) {
-                                        System.out.println("table" + i + "is reserved");
+                                    if(r.getDate().equals(preferredDate) && r.getTime().equals(preferredTime) && r.getTable().equals(Integer.toString(i))) {
+                                        //&& r.getTime() == preferredTime && r.getTable() == Integer.toString(i)
+                                        System.out.println("second if is entered, table" + i + "is reserved at" + r.getDate());
                                         isTableReserved = true;
                                         break;
                                     }
