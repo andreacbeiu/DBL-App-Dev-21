@@ -22,8 +22,6 @@ import android.widget.Toast;
 
 import com.example.ui_screens.R;
 import com.example.ui_screens.data.Reservation;
-import com.example.ui_screens.data.Restaurant;
-import com.example.ui_screens.data.Table;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -37,9 +35,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class ViewRestaurantActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -47,7 +42,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
     HashMap<String, String> ReservationToAdd = new HashMap<>();
     private List<Reservation> ReservationsToCheck = new ArrayList<>();
     private List<Integer> restaurantTables = new ArrayList<>();
-    String preferredDate, preferredTime, str_nrpeople, str_message, ReservationRestaurant, str_userID;
+    String preferredDate, preferredTime, str_nrpeople, str_message, str_RestaurantName, str_userID;
     EditText nrpeople, message;
     TextView map;
 
@@ -81,7 +76,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         ((TextView)findViewById(R.id.tvViewRestaurantName)).setText(task.getResult().getData().get("name").toString());
-                        ReservationRestaurant = (task.getResult().getData().get("name").toString());
+                        str_RestaurantName = (task.getResult().getData().get("name").toString());
                     }
                 });
 
@@ -91,12 +86,12 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
         str_nrpeople = "2";
         str_message = "";
         ReservationToAdd.put("message", str_message);
-        ReservationToAdd.put("restaurant", ReservationRestaurant);
+        ReservationToAdd.put("restaurant", str_RestaurantName);
         ReservationToAdd.put("date", preferredDate);
         ReservationToAdd.put("time", preferredTime);
         ReservationToAdd.put("table", str_nrpeople);
         ReservationToAdd.put("userID", str_userID);
-        Reservation tempRes = new Reservation(preferredDate, preferredTime, str_message, "Restaurant", str_nrpeople, str_userID);
+        Reservation tempRes = new Reservation(preferredDate, preferredTime, str_message, "Restaurant", str_RestaurantName, str_nrpeople, str_userID);
         ReservationsToCheck.add(tempRes);
 
         //getting list of current tables for restaurant
@@ -123,8 +118,8 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                     if(task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Reservation tempReservation = new Reservation(document.getData().get("date").toString(), document.getData().get("time").toString(),
-                                    document.getData().get("message").toString(), document.getData().get("restaurant").toString(), document.getData().get("table").toString(),
-                                    document.getData().get("userID").toString());
+                                    document.getData().get("message").toString(), document.getData().get("restaurant").toString(), document.getData().get("restName").toString(),
+                                    document.getData().get("table").toString(), document.getData().get("userID").toString());
                             ReservationsToCheck.add(tempReservation);
                         }
                         System.out.println("GOT RESERVATIONSSSSSSSSSSSSSSSSSSSS");
@@ -278,7 +273,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                         if (isTableAvailable) {
                             //updating other elements of the reservation to be added
                             ReservationToAdd.put("message", str_message);
-                            ReservationToAdd.put("restaurant", ReservationRestaurant);
+                            ReservationToAdd.put("restaurant", str_RestaurantName);
                             ReservationToAdd.put("date", preferredDate);
                             ReservationToAdd.put("time", preferredTime);
                             ReservationToAdd.put("userID", str_userID);

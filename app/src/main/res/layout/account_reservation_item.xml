@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="25dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvReservationRestaurantName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Restaurant Name"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvReservationTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This is a time"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tvReservationDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This is a date"
+            android:textSize="14sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvReservationTableNr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="3"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+
+</LinearLayout>

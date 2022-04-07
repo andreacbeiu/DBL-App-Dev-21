@@ -2,13 +2,17 @@ package com.example.ui_screens.customers;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.accounts.Account;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.ui_screens.R;
+import com.example.ui_screens.data.Reservation;
 import com.example.ui_screens.data.Restaurant;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,47 +29,30 @@ import java.util.List;
 
 public class AccountActivity extends AppCompatActivity {
 
-    private TextView UsersEmail, UsersPassword, Reservation;
-    private List<String> reservations = new ArrayList<>();
-    private String email, str_restaurant;
+    private TextView UsersEmail, Reservation;
+    private List<Reservation> reservations = new ArrayList<>();
+    private String email;
     FirebaseAuth mAuth;
     FirebaseUser user;
     FirebaseFirestore db;
-    Query query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
 
-        Reservation = (TextView) findViewById(R.id.tvReservation);
-
         //get authorisation instance
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         UsersEmail = (TextView) findViewById(R.id.tvUserEmail);
-        UsersPassword = (TextView) findViewById(R.id.tvUserPassword);
 
-        db = FirebaseFirestore.getInstance();
-        db.collection("reservation")
-                .whereEqualTo("userID", user.getUid())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                        reservations = new ArrayList<>();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                reservations.add(document.getData().get("date").toString());
-                            }
-                        }
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        RecyclerView rvReservations = findViewById(R.id.rvReservations);
+        AccountAdapter rvReservationsAdapter = new AccountAdapter(db, user.getUid());
 
-                    }
-                });
+        rvReservations.setAdapter(rvReservationsAdapter);
+        rvReservations.setLayoutManager(new LinearLayoutManager(this));
 
-        Reservation = (TextView) findViewById(R.id.tvReservation);
-
-        //query = db.collection("reservation").whereEqualTo("userID", user.getUid());
 
 
     }
@@ -83,8 +70,5 @@ public class AccountActivity extends AppCompatActivity {
         }
     }
 
-    public void displayRestaurant(View v) {
-        Reservation.setText(reservations.get(0));
-    }
 
 }
