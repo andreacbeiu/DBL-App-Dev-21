@@ -36,6 +36,7 @@ public class ViewRestaurantActivity extends AppCompatActivity {
                 });
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("images/" + getIntent().getExtras().getString("id")+".jpg");
+        System.out.println(getIntent().getStringExtra("id"));
         ImageView imageView = findViewById(R.id.ivViewRestaurant);
 
         final long ONE_MEGABYTE = 1024*1024;
