@@ -86,7 +86,8 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
         str_nrpeople = "2";
         str_message = "";
         ReservationToAdd.put("message", str_message);
-        ReservationToAdd.put("restaurant", str_RestaurantName);
+        ReservationToAdd.put("restaurant", str_restaurantId);
+        ReservationToAdd.put("restName", str_RestaurantName);
         ReservationToAdd.put("date", preferredDate);
         ReservationToAdd.put("time", preferredTime);
         ReservationToAdd.put("table", str_nrpeople);
@@ -273,7 +274,8 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                         if (isTableAvailable) {
                             //updating other elements of the reservation to be added
                             ReservationToAdd.put("message", str_message);
-                            ReservationToAdd.put("restaurant", str_RestaurantName);
+                            ReservationToAdd.put("restaurant", str_restaurantId);
+                            ReservationToAdd.put("restName", str_RestaurantName);
                             ReservationToAdd.put("date", preferredDate);
                             ReservationToAdd.put("time", preferredTime);
                             ReservationToAdd.put("userID", str_userID);
