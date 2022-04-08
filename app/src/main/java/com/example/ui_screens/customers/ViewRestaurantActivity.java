@@ -8,6 +8,8 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -29,6 +32,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -128,6 +133,18 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
                         //System.out.println(ReservationsToCheck.size());
                     }
                 });
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("images/" + restaurantId+".jpg");
+        System.out.println("images/" + getIntent().getExtras().getString("id")+".jpg");
+        ImageView imageView = findViewById(R.id.ivViewRestaurant);
+
+        final long ONE_MEGABYTE = 1024*1024;
+        storageRef.getBytes(ONE_MEGABYTE * 2).addOnSuccessListener(bytes -> {
+            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            imageView.setImageBitmap(bmp);
+        }).addOnFailureListener(e -> {
+            imageView.setImageDrawable(getDrawable(R.drawable.default_restaurant));
+        });
 
     }
 
