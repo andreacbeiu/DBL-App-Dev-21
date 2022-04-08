@@ -100,6 +100,7 @@ public class RestaurantMainActivity extends AppCompatActivity {
                     } else {
                         //sets the intent of the function: changing the activity
                         Intent intent = new Intent(RestaurantMainActivity.this, RestaurantEditActivity.class);
+                        intent.putExtra("resId", restaurantID);
                         //starts the activity associated with the intent
                         startActivity(intent);
                     }
