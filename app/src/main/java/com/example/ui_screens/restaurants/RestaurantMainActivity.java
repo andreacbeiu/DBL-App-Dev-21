@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -30,17 +32,43 @@ import java.util.Arrays;
 public class RestaurantMainActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
+    private FirebaseFirestore db2;
     FirebaseAuth mAuth;
     FirebaseUser user;
+    String restaurantID;
+    TextView restaurantName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_main);
 
+        restaurantName = (TextView) findViewById(R.id.textRestaurantName);
         db = FirebaseFirestore.getInstance();
+        db2 = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+
+        db.collection("restaurant_users")
+                .document(user.getUid().toString())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        restaurantID = document.getData().get("resId").toString();
+                        System.out.println(restaurantID);
+                        db2.collection("restaurants")
+                                .document(restaurantID)
+                                .get()
+                                .addOnCompleteListener(task2 -> {
+                                    if(task2.isSuccessful()) {
+                                        DocumentSnapshot document2 = task2.getResult();
+                                        restaurantName.setText(document2.getData().get("name").toString());
+                                    }
+                                });
+                    }
+                });
+
 
     }
 
