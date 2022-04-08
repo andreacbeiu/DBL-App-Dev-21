@@ -2,7 +2,10 @@ package com.example.ui_screens.restaurants;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.ui_screens.R;
@@ -38,5 +41,28 @@ public class RestaurantAccountActivity extends AppCompatActivity {
             email = user.getEmail();
             UsersEmail.setText(email);
         }
+    }
+
+    //Top bar menu inflater
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    //Handles actions in the topbar menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.account:
+                startActivity(new Intent(this, RestaurantAccountActivity.class));
+                this.finish();
+                return true;
+            case R.id.restaurantLogOut:
+                mAuth.getInstance().signOut();
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

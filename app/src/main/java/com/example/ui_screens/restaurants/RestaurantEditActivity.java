@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -39,11 +41,14 @@ public class RestaurantEditActivity extends AppCompatActivity {
     EditText etName;
     EditText etDescription;
     ActivityResultLauncher<String> mGetContent;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_edit);
+
+        mAuth = FirebaseAuth.getInstance();
 
         id = getIntent().getStringExtra("resId");
 
@@ -110,7 +115,37 @@ public class RestaurantEditActivity extends AppCompatActivity {
                 });
     }
 
+    //Top bar menu inflater
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    //Handles actions in the topbar menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.account:
+                startActivity(new Intent(this, RestaurantAccountActivity.class));
+                this.finish();
+                return true;
+            case R.id.restaurantLogOut:
+                mAuth.getInstance().signOut();
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void chooseImage(View view){
         mGetContent.launch("image/*");
+    }
+
+    //close activity upon leaving through back button
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
 }

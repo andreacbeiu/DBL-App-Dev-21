@@ -169,7 +169,6 @@ public class RestaurantMainActivity extends AppCompatActivity {
     //Top bar menu inflater
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
         getMenuInflater().inflate(R.menu.options_menu, menu);
         return true;
     }

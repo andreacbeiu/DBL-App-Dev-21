@@ -129,6 +129,13 @@ public class RestaurantLoginActivity extends AppCompatActivity {
 
     }
 
+    //close activity upon leaving through back button
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
 
 
 }
