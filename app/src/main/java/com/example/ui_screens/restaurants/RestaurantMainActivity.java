@@ -3,6 +3,8 @@ package com.example.ui_screens.restaurants;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ui_screens.R;
+import com.example.ui_screens.customers.AccountActivity;
+import com.example.ui_screens.customers.SearchPageActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -132,5 +136,28 @@ public class RestaurantMainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RestaurantLoginActivity.class);
         //starts the activity associated with the intent
         startActivity(intent);
+    }
+
+    //Top bar menu inflater
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    //Handles actions in the topbar menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.account:
+                startActivity(new Intent(this, RestaurantAccountActivity.class));
+                return true;
+            case R.id.restaurantLogOut:
+                mAuth.getInstance().signOut();
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
