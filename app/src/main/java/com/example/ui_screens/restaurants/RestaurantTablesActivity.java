@@ -45,7 +45,7 @@ public class RestaurantTablesActivity extends AppCompatActivity {
                 startActivity(new Intent(this, RestaurantAccountActivity.class));
                 this.finish();
                 return true;
-            case R.id.restaurantLogOut:
+            case R.id.LogOut:
                 mAuth.getInstance().signOut();
                 this.finish();
                 return true;

@@ -49,12 +49,11 @@ public class SearchPageActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_search:
-                startActivity(new Intent(this, SearchPageActivity.class));
                 return true;
             case R.id.account:
                 startActivity(new Intent(this, RestaurantLoginActivity.class));
                 return true;
-            case R.id.restaurantLogOut:
+            case R.id.LogOut:
                 return true;
         }
         return super.onOptionsItemSelected(item);

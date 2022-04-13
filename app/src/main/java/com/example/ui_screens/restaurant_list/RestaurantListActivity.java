@@ -26,7 +26,6 @@ import com.example.ui_screens.customers.AccountActivity;
 import com.example.ui_screens.customers.MainActivity;
 import com.example.ui_screens.R;
 import com.example.ui_screens.customers.SearchPageActivity;
-import com.example.ui_screens.restaurants.RestaurantLoginActivity;
 import com.example.ui_screens.customers.ViewRestaurantActivity;
 import com.example.ui_screens.data.RecyclerTouchListener;
 import com.example.ui_screens.data.Restaurant;
@@ -234,7 +233,7 @@ public class RestaurantListActivity extends AppCompatActivity {
             case R.id.account:
                 startActivity(new Intent(this, AccountActivity.class));
                 return true;
-            case R.id.restaurantLogOut:
+            case R.id.LogOut:
                 mAuth.getInstance().signOut();
                 startActivity(new Intent(this, MainActivity.class));
                 this.finish();

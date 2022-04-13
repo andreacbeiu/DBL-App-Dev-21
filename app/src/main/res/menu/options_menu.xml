@@ -6,7 +6,7 @@
         android:title="Account" />
 
     <item
-        android:id="@+id/restaurantLogOut"
+        android:id="@+id/LogOut"
         android:title="Log Out" />
 
 </menu>

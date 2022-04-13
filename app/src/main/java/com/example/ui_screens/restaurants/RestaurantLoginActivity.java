@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -54,6 +55,17 @@ public class RestaurantLoginActivity extends AppCompatActivity {
                 loginUser();
             }
         });
+    }
+
+    //checks if a user is already logged in
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            startActivity(new Intent(RestaurantLoginActivity.this, RestaurantMainActivity.class));
+        }
     }
 
     public void restaurantAccountLog(View view) {
@@ -113,6 +125,8 @@ public class RestaurantLoginActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(RestaurantLoginActivity.this, "User Logged In Successfully", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(RestaurantLoginActivity.this, RestaurantMainActivity.class));
+                                    finishLogin();//finishes the login activity page
+                                    System.out.println("logged the user in and finished login page");
                                 } else {
                                     Toast.makeText(RestaurantLoginActivity.this, "User Login Failed", Toast.LENGTH_SHORT).show();
                                 }
@@ -135,6 +149,8 @@ public class RestaurantLoginActivity extends AppCompatActivity {
         super.onBackPressed();
         this.finish();
     }
+
+    public void finishLogin() {this.finish(); }
 
 
 

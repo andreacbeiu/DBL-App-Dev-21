@@ -173,7 +173,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
             case R.id.account:
                 startActivity(new Intent(this, AccountActivity.class));
                 return true;
-            case R.id.restaurantLogOut:
+            case R.id.LogOut:
                 mAuth.getInstance().signOut();
                 this.finish();
                 return true;

@@ -58,6 +58,8 @@ public class CustomerLoginActivity extends AppCompatActivity {
            }
        });
     }
+
+    //checks if a user is already logged in
     @Override
     public void onStart() {
         super.onStart();
@@ -67,6 +69,14 @@ public class CustomerLoginActivity extends AppCompatActivity {
             startActivity(new Intent(CustomerLoginActivity.this, RestaurantListActivity.class));
         }
     }
+
+    //close activity upon leaving through back button
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
     //opens up registration page
     public void openRegistration(View view) {
         startActivity(new Intent(CustomerLoginActivity.this, RegistrationActivity.class));

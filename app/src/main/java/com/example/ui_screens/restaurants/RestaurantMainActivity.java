@@ -13,11 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ui_screens.R;
-import com.example.ui_screens.customers.AccountActivity;
-import com.example.ui_screens.customers.SearchPageActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -181,7 +178,7 @@ public class RestaurantMainActivity extends AppCompatActivity {
             case R.id.account:
                 startActivity(new Intent(this, RestaurantAccountActivity.class));
                 return true;
-            case R.id.restaurantLogOut:
+            case R.id.LogOut:
                 mAuth.getInstance().signOut();
                 this.finish();
                 return true;
