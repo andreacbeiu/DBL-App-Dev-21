@@ -302,4 +302,11 @@ public class RestaurantListActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
+        // Not calling **super**, disables back button in current screen.
+        Toast.makeText(getApplicationContext(), "You are already logged in!", Toast.LENGTH_LONG).show();
+    }
+
 }
