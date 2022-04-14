@@ -25,6 +25,7 @@ public class RestaurantTablesAdapter extends RecyclerView.Adapter<RestaurantTabl
     public void refresh() {
         tables = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        System.out.println("id: " + id);
         db.collection("restaurants").document(id).get()
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
