@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ViewRestaurantActivity">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tvViewRestaurantName"
@@ -99,6 +98,7 @@
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:onClick="viewMenu"
         android:text="Menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.913"
