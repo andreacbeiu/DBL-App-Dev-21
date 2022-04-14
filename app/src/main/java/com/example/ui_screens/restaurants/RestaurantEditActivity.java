@@ -242,7 +242,7 @@ public class RestaurantEditActivity extends AppCompatActivity {
             }
     }
 
-    private void registerLocation(){
+    public void registerLocation(View view){
         if (!isGPSEnabled())
             turnOnGPS();
         else {
