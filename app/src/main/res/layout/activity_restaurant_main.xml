@@ -111,8 +111,9 @@
         android:layout_height="24dp"
         android:text="________________________________"
         android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@+id/textRating"
-        tools:layout_editor_absoluteX="40dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textRating" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reservationListRestMain"
