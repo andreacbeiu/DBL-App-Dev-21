@@ -50,6 +50,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
     String preferredDate, preferredTime, str_nrpeople, str_message, str_RestaurantName, str_userID;
     EditText nrpeople, message;
     TextView map;
+    String restaurantId;
 
     FirebaseAuth mAuth;
     FirebaseFirestore db_tableArray;
@@ -72,7 +73,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
         map = (TextView) findViewById(R.id.textView16);
 
         //setting restaurant name to title of page
-        String restaurantId = getIntent().getExtras().getString("id");
+        restaurantId = getIntent().getExtras().getString("id");
         str_restaurantId = restaurantId;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("restaurants")
@@ -332,6 +333,16 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
         AlertDialog bookingDialog = dialog.create();
         bookingDialog.show();
 
+    }
+
+    public void viewMenu(View view){
+        StorageReference menuRef = FirebaseStorage.getInstance().getReference().child("menus/" + restaurantId+".pdf");
+        menuRef.getDownloadUrl().addOnSuccessListener(uri -> {
+            Intent i = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(i);
+        }).addOnFailureListener(unused -> {
+            Toast.makeText(this, "No menu available", Toast.LENGTH_SHORT).show();
+        });
     }
 
 
