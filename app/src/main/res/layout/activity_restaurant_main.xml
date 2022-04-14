@@ -11,7 +11,7 @@
         android:id="@+id/textRestaurantName"
         android:layout_width="352dp"
         android:layout_height="69dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="56dp"
         android:text="restaurantName"
         android:textAlignment="center"
         android:textSize="38sp"
@@ -22,21 +22,22 @@
 
     <Button
         android:id="@+id/restaurantEdit"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
+        android:layout_width="197dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="28dp"
         android:onClick="restaurantEdit"
-        android:text="Edit"
+        android:text="Edit restaurant details"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toEndOf="@+id/restaurantAccounts"
-        app:layout_constraintTop_toBottomOf="@+id/textRestaurantName" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/decoration1" />
 
     <Button
         android:id="@+id/restaurantTables"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="8dp"
         android:onClick="restaurantTables"
         android:text="Tables"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,9 +48,13 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:onClick="restaurantAssociatedAccounts"
+        android:layout_marginTop="8dp"
         android:text="Accounts"
         android:onClick="accountManagement"
         android:textSize="11dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.446"
         app:layout_constraintStart_toEndOf="@+id/restaurantTables"
         app:layout_constraintTop_toBottomOf="@+id/textRestaurantName" />
 
@@ -57,13 +62,13 @@
         android:id="@+id/textView9"
         android:layout_width="329dp"
         android:layout_height="24dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="16dp"
         android:text="________________________________"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/restaurantTables" />
+        app:layout_constraintTop_toBottomOf="@+id/restaurantAccounts" />
 
     <TextView
         android:id="@+id/textReservedTables"
@@ -118,11 +123,26 @@
         android:layout_width="409dp"
         android:layout_height="199dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/decoration1" />
+        app:layout_constraintTop_toBottomOf="@+id/restaurantEdit" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="restaurantAccounts" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
