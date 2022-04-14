@@ -117,14 +117,6 @@ public class RestaurantMainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void logoutRestaurant(View view) {
-        mAuth.signOut();
-        //sets the intent of the function: changing the activity
-        Intent intent = new Intent(this, RestaurantLoginActivity.class);
-        //starts the activity associated with the intent
-        startActivity(intent);
-    }
-
     public void accountManagement(View view) {
         Intent intent = new Intent(this, RestaurantAccountManagement.class);
         startActivity(intent);

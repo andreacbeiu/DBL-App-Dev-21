@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ui_screens.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,8 +56,7 @@ public class RestaurantAccountActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.account:
-                startActivity(new Intent(this, RestaurantAccountActivity.class));
-                this.finish();
+                Toast.makeText(getApplicationContext(),"You are already viewing your account!",Toast.LENGTH_LONG).show();
                 return true;
             case R.id.LogOut:
                 mAuth.getInstance().signOut();

@@ -79,8 +79,35 @@ public class RestaurantAccountManagement extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
+    }
 
+    //Top bar menu inflater
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
 
+    //Handles actions in the topbar menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.account:
+                startActivity(new Intent(this, RestaurantAccountActivity.class));
+                return true;
+            case R.id.LogOut:
+                mAuth.getInstance().signOut();
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    //close activity upon leaving through back button
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
 
 

@@ -10,9 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ui_screens.R;
 import com.example.ui_screens.restaurants.RestaurantLoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SearchPageActivity extends AppCompatActivity {
 
@@ -20,12 +22,14 @@ public class SearchPageActivity extends AppCompatActivity {
     EditText search_value;
     TextView result;
     Button buttonSearch;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_page);
 
+        mAuth = FirebaseAuth.getInstance();
         search_value  = (EditText) findViewById(R.id.editTextTextPersonName5);
         result = (TextView) findViewById(R.id.textView20);
         buttonSearch = (Button) findViewById(R.id.button6);
@@ -49,13 +53,23 @@ public class SearchPageActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_search:
+                Toast.makeText(getApplicationContext(),"You are already viewing the search page!",Toast.LENGTH_LONG).show();
                 return true;
             case R.id.account:
-                startActivity(new Intent(this, RestaurantLoginActivity.class));
+                startActivity(new Intent(this, AccountActivity.class));
                 return true;
             case R.id.LogOut:
+                mAuth.getInstance().signOut();
+                this.finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //close activity upon leaving through back button
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
 }
