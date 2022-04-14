@@ -46,8 +46,8 @@
             android:name=".restaurants.RestaurantEditActivity"
             android:exported="false" />
         <activity
-            android:name=".restaurants.RestaurantRewardsActivity"
-            android:exported="false" />
+            android:name=".restaurants.RestaurantAssociatedAccounts"
+            android:exported="false"/>
         <activity
             android:name=".restaurants.RestaurantTablesActivity"
             android:exported="false" />

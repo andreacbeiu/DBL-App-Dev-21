@@ -110,45 +110,6 @@ public class RestaurantMainActivity extends AppCompatActivity {
 
     }
 
-    public void restaurantRewards(View view) {
-        CollectionReference users = db.collection("restaurant_users");
-
-        Query ref = users.whereIn("type", Arrays.asList("employee"));
-
-        String email = user.getEmail();
-
-        ref.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                String email_check = "";
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-
-                        String email_id = document.getString("name");
-
-                        if (email_id.equals(email)) {
-                            email_check = email_id;
-                            Log.d("BookIt", document.getId() + " => " + document.getData() + email_check);
-                        }
-                    }
-
-                    if (email.equals(email_check)) {
-                        Log.d("BookIt", "if statement reached");
-                        Toast.makeText(RestaurantMainActivity.this, "Cannot login with customer account", Toast.LENGTH_SHORT).show();
-                    } else {
-                        //sets the intent of the function: changing the activity
-                        Intent intent = new Intent(RestaurantMainActivity.this, RestaurantRewardsActivity.class);
-                        //starts the activity associated with the intent
-                        startActivity(intent);
-                    }
-                }
-                else {
-                    Log.d("BookIt", "Error getting documents: ", task.getException());
-                }
-            }
-        });
-    }
-
     public void restaurantTables(View view) {
         //sets the intent of the function: changing the activity
         Intent intent = new Intent(this, RestaurantTablesActivity.class);
@@ -157,13 +118,11 @@ public class RestaurantMainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void logoutRestaurant(View view) {
-        mAuth.signOut();
-        //sets the intent of the function: changing the activity
-        Intent intent = new Intent(this, RestaurantLoginActivity.class);
-        //starts the activity associated with the intent
+    public void restaurantAssociatedAccounts(View view) {
+        Intent intent = new Intent(this, RestaurantAssociatedAccounts.class);
         startActivity(intent);
     }
+
 
     //Top bar menu inflater
     @Override

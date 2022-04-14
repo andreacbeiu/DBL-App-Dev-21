@@ -11,11 +11,12 @@
         android:id="@+id/textRestaurantName"
         android:layout_width="352dp"
         android:layout_height="69dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="52dp"
         android:text="restaurantName"
         android:textAlignment="center"
         android:textSize="38sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,38 +24,12 @@
         android:id="@+id/restaurantEdit"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="28dp"
         android:onClick="restaurantEdit"
         android:text="Edit"
-        app:layout_constraintEnd_toStartOf="@+id/restaurantRewards"
-        app:layout_constraintStart_toEndOf="@+id/restaurantChats"
-        app:layout_constraintTop_toBottomOf="@+id/textRestaurantName" />
-
-    <Button
-        android:id="@+id/restaurantRewards"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="43dp"
-        android:text="Rewards"
-        android:textSize="13dp"
-        android:onClick="restaurantRewards"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/restaurantEdit"
-        app:layout_constraintTop_toBottomOf="@+id/textRestaurantName" />
-
-    <Button
-        android:id="@+id/restaurantChats"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="8dp"
-        android:text="Chats"
-        app:layout_constraintEnd_toStartOf="@+id/restaurantEdit"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toEndOf="@+id/restaurantAccounts"
         app:layout_constraintTop_toBottomOf="@+id/textRestaurantName" />
 
     <Button
@@ -65,30 +40,18 @@
         android:onClick="restaurantTables"
         android:text="Tables"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/restaurantChats" />
+        app:layout_constraintTop_toBottomOf="@+id/textRestaurantName" />
 
     <Button
         android:id="@+id/restaurantAccounts"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:onClick="restaurantAssociatedAccounts"
         android:text="Accounts"
         android:textSize="11dp"
-        app:layout_constraintEnd_toStartOf="@+id/restaurantSignOut"
         app:layout_constraintStart_toEndOf="@+id/restaurantTables"
-        app:layout_constraintTop_toBottomOf="@+id/restaurantEdit" />
-
-    <Button
-        android:id="@+id/restaurantSignOut"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="43dp"
-        android:text="Sign out"
-        android:textSize="13dp"
-        android:onClick="logoutRestaurant"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/restaurantRewards" />
+        app:layout_constraintTop_toBottomOf="@+id/textRestaurantName" />
 
     <TextView
         android:id="@+id/textView9"
@@ -142,10 +105,11 @@
         android:id="@+id/decoration1"
         android:layout_width="329dp"
         android:layout_height="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:text="________________________________"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textRating" />
 
