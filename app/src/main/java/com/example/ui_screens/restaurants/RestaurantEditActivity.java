@@ -35,7 +35,7 @@ public class RestaurantEditActivity extends AppCompatActivity {
     FirebaseFirestore db;
     EditText etName;
     EditText etDescription;
-    ActivityResultLauncher<String> mGetContent;
+    ActivityResultLauncher<String> mGetContent, mGetPdf;
     FirebaseAuth mAuth;
 
     @Override
@@ -48,6 +48,7 @@ public class RestaurantEditActivity extends AppCompatActivity {
         id = getIntent().getStringExtra("resId");
 
         final StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" + id + ".jpg");
+        final StorageReference pdfRef = FirebaseStorage.getInstance().getReference().child("menus/" + id + ".pdf");
         final ImageView restIV = (ImageView)findViewById(R.id.ivEditRestaurantImage);
         final long ONE_MEGABYTE = 1024*1024;
 
@@ -73,6 +74,26 @@ public class RestaurantEditActivity extends AppCompatActivity {
                                     .addOnSuccessListener(unused -> {
                                         restIV.setImageURI(uri);
                                         Toast.makeText(RestaurantEditActivity.this, "Uploading of image was succesful", Toast.LENGTH_SHORT).show();
+                                    });
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+        mGetPdf = registerForActivityResult(new ActivityResultContracts.GetContent(),
+                new ActivityResultCallback<Uri>() {
+                    @Override
+                    public void onActivityResult(Uri uri) {
+                        try {
+                            System.out.println(uri.getPath());
+                            InputStream stream = getContentResolver().openInputStream(uri);
+
+                            pdfRef.putStream(stream)
+                                    .addOnFailureListener(unused -> {
+                                        Toast.makeText(RestaurantEditActivity.this, "Uploading of menu was unsuccesful", Toast.LENGTH_SHORT).show();
+                                    })
+                                    .addOnSuccessListener(unused -> {
+                                        Toast.makeText(RestaurantEditActivity.this, "Uploading of menu was succesful", Toast.LENGTH_SHORT).show();
                                     });
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
@@ -110,6 +131,16 @@ public class RestaurantEditActivity extends AppCompatActivity {
                 });
     }
 
+    public void viewMenu(View view){
+        StorageReference menuRef = FirebaseStorage.getInstance().getReference().child("menus/" + id + ".pdf");
+        menuRef.getDownloadUrl().addOnSuccessListener(uri -> {
+            Intent i = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(i);
+        }).addOnFailureListener(unused -> {
+            Toast.makeText(this, "No menu available", Toast.LENGTH_SHORT).show();
+        });
+    }
+
     //Top bar menu inflater
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -135,6 +166,8 @@ public class RestaurantEditActivity extends AppCompatActivity {
     public void chooseImage(View view){
         mGetContent.launch("image/*");
     }
+
+    public void chooseMenu(View view) { mGetPdf.launch("application/pdf"); }
 
     //close activity upon leaving through back button
     @Override
