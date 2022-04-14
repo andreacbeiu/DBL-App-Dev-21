@@ -47,6 +47,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:onClick="restaurantAssociatedAccounts"
         android:text="Accounts"
         android:textSize="11dp"
         app:layout_constraintStart_toEndOf="@+id/restaurantTables"
