@@ -9,9 +9,13 @@ import android.accounts.Account;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ui_screens.R;
 import com.example.ui_screens.data.Reservation;
@@ -74,6 +78,39 @@ public class AccountActivity extends AppCompatActivity {
         }
     }
 
+    //close activity upon leaving through back button
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
+    //Top bar menu inflater
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    //Handles actions in the topbar menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_search:
+                startActivity(new Intent(this, SearchPageActivity.class));
+                return true;
+            case R.id.account:
+                Toast.makeText(getApplicationContext(),"You are already viewing your account!",Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.LogOut:
+                mAuth.getInstance().signOut();
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void deleteAccount(View view) {
         user.delete()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -86,6 +123,8 @@ public class AccountActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
 
 
 }

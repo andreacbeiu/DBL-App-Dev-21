@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ui_screens.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -76,8 +77,7 @@ public class RestaurantAccountActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.account:
-                startActivity(new Intent(this, RestaurantAccountActivity.class));
-                this.finish();
+                Toast.makeText(getApplicationContext(),"You are already viewing your account!",Toast.LENGTH_LONG).show();
                 return true;
             case R.id.LogOut:
                 mAuth.getInstance().signOut();

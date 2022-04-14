@@ -123,7 +123,6 @@ public class RestaurantEditActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.account:
                 startActivity(new Intent(this, RestaurantAccountActivity.class));
-                this.finish();
                 return true;
             case R.id.LogOut:
                 mAuth.getInstance().signOut();
