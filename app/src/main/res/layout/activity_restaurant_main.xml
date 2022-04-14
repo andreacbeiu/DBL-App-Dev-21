@@ -51,6 +51,7 @@
         android:layout_marginTop="8dp"
         android:onClick="restaurantAssociatedAccounts"
         android:text="Accounts"
+        android:onClick="accountManagement"
         android:textSize="11dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.446"

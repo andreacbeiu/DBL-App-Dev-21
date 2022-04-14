@@ -1,5 +1,6 @@
 package com.example.ui_screens.restaurant_list;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +78,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
                         this.notifyDataSetChanged();
                     }
                 });
+
     }
 
     @NonNull

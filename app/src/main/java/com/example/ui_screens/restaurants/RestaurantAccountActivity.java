@@ -1,14 +1,21 @@
 package com.example.ui_screens.restaurants;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ui_screens.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -16,6 +23,7 @@ public class RestaurantAccountActivity extends AppCompatActivity {
 
     private String email;
     private TextView UsersEmail;
+    private Button delButton;
     FirebaseAuth mAuth;
     FirebaseUser user;
 
@@ -28,6 +36,7 @@ public class RestaurantAccountActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         UsersEmail = (TextView) findViewById(R.id.tvRestUserEmail);
+        delButton = (Button) findViewById(R.id.delbutton);
     }
 
     @Override
@@ -50,13 +59,25 @@ public class RestaurantAccountActivity extends AppCompatActivity {
         return true;
     }
 
+    public void deleteAccount(View view) {
+        user.delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            startActivity(new Intent(RestaurantAccountActivity.this, RestaurantLoginActivity.class));
+                            Log.d("BookIt", "User account deleted.");
+                        }
+                    }
+                });
+    }
+
     //Handles actions in the topbar menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.account:
-                startActivity(new Intent(this, RestaurantAccountActivity.class));
-                this.finish();
+                Toast.makeText(getApplicationContext(),"You are already viewing your account!",Toast.LENGTH_LONG).show();
                 return true;
             case R.id.LogOut:
                 mAuth.getInstance().signOut();

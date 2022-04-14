@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UI_screens">
         <activity
+            android:name=".restaurants.RestaurantAccountManagement"
+            android:exported="false" />
+        <activity
             android:name=".restaurants.RestaurantAccountActivity"
             android:exported="false" />
         <activity
@@ -45,9 +48,6 @@
         <activity
             android:name=".restaurants.RestaurantEditActivity"
             android:exported="false" />
-        <activity
-            android:name=".restaurants.RestaurantAssociatedAccounts"
-            android:exported="false"/>
         <activity
             android:name=".restaurants.RestaurantTablesActivity"
             android:exported="false" />

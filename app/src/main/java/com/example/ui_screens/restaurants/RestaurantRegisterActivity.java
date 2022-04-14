@@ -133,12 +133,20 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
                     Map<String, Object> user = new HashMap<>();
                     user.put("name", name);
                     user.put("resId", documentReference.getId());
+                    user.put("email", email);
+                    user.put("phone", "");
+                    user.put("address", "");
                     user.put("type", "manager");
+
+
 
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(task -> {
                                 if(task.isSuccessful()) {
-                                    db.collection("restaurant_users")
+                                    String user_id = task.getResult().getUser().getUid();
+                                    user.put("userID", user_id);
+                                    Log.d("BookIt", "user" + user);
+                                    db.collection("users")
                                             .document(task.getResult().getUser().getUid())
                                             .set(user)
                                             .addOnSuccessListener(userDocRef -> {
@@ -151,6 +159,7 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
                                         task.getResult().getUser().delete();
                                         documentReference.delete();
                                     });
+
                                 } else {
                                     Toast.makeText(this, "Could not create account", Toast.LENGTH_SHORT).show();
                                     documentReference.delete();
