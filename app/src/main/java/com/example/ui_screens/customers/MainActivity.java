@@ -9,6 +9,7 @@ import android.view.View;
 import com.example.ui_screens.R;
 import com.example.ui_screens.restaurant_list.RestaurantListActivity;
 import com.example.ui_screens.restaurants.RestaurantLoginActivity;
+import com.example.ui_screens.restaurants.RestaurantAccountManagement;
 //import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
     public void restaurantList(View view) {
         //sets the intent of the function: changing the activity
         Intent intent = new Intent(this, RestaurantListActivity.class);
+        //starts the activity associated with the intent
+        startActivity(intent);
+    }
+
+    public void accountManagement(View view) {
+        //sets the intent of the function: changing the activity
+        Intent intent = new Intent(this, RestaurantAccountManagement.class);
         //starts the activity associated with the intent
         startActivity(intent);
     }

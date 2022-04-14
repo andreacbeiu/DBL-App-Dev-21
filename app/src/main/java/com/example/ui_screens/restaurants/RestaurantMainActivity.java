@@ -125,6 +125,11 @@ public class RestaurantMainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void accountManagement(View view) {
+        Intent intent = new Intent(this, RestaurantAccountManagement.class);
+        startActivity(intent);
+    }
+
     //Top bar menu inflater
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

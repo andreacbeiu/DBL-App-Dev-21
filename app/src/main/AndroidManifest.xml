@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UI_screens">
         <activity
+            android:name=".restaurants.RestaurantAccountManagement"
+            android:exported="false" />
+        <activity
             android:name=".restaurants.RestaurantAccountActivity"
             android:exported="false" />
         <activity

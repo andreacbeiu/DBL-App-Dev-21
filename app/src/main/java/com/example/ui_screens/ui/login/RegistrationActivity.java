@@ -49,7 +49,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private Button button;
-    private EditText editTextEmail, editTextPassword, editTextPhone;
+    private EditText editTextEmail, editTextPassword, editTextPhone, editTextName, editTextAddress;
     private ProgressBar progressBar;
     private FirebaseFirestore db;
     FirebaseAuth mAuth;
@@ -66,6 +66,8 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextEmail = (EditText) findViewById(R.id.username);
         editTextPassword = (EditText) findViewById(R.id.password);
         editTextPhone = (EditText) findViewById(R.id.phone);
+        editTextAddress = (EditText) findViewById(R.id.address);
+        editTextName = (EditText) findViewById(R.id.name);
 
 
         progressBar = (ProgressBar) findViewById(R.id.loading);
@@ -105,6 +107,8 @@ public class RegistrationActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
         String phone = editTextPhone.getText().toString();
+        String name = editTextName.getText().toString();
+        String address = editTextAddress.getText().toString();
 
         if (email.isEmpty()) {
             editTextEmail.setError("Email Cannot Be Empty");
@@ -135,15 +139,15 @@ public class RegistrationActivity extends AppCompatActivity {
 
         HashMap<String, String> user = new HashMap<String, String>();
 
-        user.put("name", email);
-        user.put("restaurant", "");
+        user.put("name", name);
+        user.put("resID", "");
         user.put("type", "customer");
+        user.put("email", email);
+        user.put("address", address);
+        user.put("phone", phone);
 
 
-
-
-
-        CollectionReference users = db.collection("restaurant_users");
+        CollectionReference users = db.collection("users");
 
         Query ref = users.whereEqualTo("type", Arrays.asList("manager", "employee"));
 

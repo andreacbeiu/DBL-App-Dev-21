@@ -48,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="Accounts"
+        android:onClick="accountManagement"
         android:textSize="11dp"
         app:layout_constraintStart_toEndOf="@+id/restaurantTables"
         app:layout_constraintTop_toBottomOf="@+id/textRestaurantName" />

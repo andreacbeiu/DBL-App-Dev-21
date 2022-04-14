@@ -16,14 +16,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/tableName"
+                android:id="@+id/nameaccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Table Name"
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/tableStatus"
+                android:id="@+id/emailaccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Seats: 7"
