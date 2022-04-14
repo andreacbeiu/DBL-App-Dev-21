@@ -225,7 +225,6 @@ public class RestaurantEditActivity extends AppCompatActivity {
                 turnOnGPS();
             else {
                 getCurrentLocation();
-                System.out.println("cacaman");
                 //getNearbyRestaurants();
             }
     }
@@ -237,7 +236,6 @@ public class RestaurantEditActivity extends AppCompatActivity {
         if (requestCode == 2)
             if (resultCode == Activity.RESULT_OK) {
                 getCurrentLocation();
-                System.out.println("cacaman");
                 //getNearbyRestaurants();
             }
     }
@@ -247,8 +245,6 @@ public class RestaurantEditActivity extends AppCompatActivity {
             turnOnGPS();
         else {
             getCurrentLocation();
-            System.out.println("cacaman");
-            Toast.makeText(RestaurantEditActivity.this, "The location has been registered!", Toast.LENGTH_SHORT).show();
             //getNearbyRestaurants();
         }
     }
@@ -274,7 +270,7 @@ public class RestaurantEditActivity extends AppCompatActivity {
                                         double longitude = locationResult.getLocations().get(index).getLongitude();
                                         currentLocation = new GeoLocation(latitude, longitude);
                                         Toast.makeText(RestaurantEditActivity.this, "The location has been registered!", Toast.LENGTH_SHORT).show();
-
+                                        System.out.println("help");
                                     }
                                 }
                             }, Looper.getMainLooper());
