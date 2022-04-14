@@ -40,4 +40,24 @@
         app:layout_constraintStart_toEndOf="@+id/tvRestYourEmailIs"
         app:layout_constraintTop_toBottomOf="@+id/tvRestAccountTitle" />
 
+    <Button
+        android:id="@+id/delbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="Delete"
+        android:onClick="deleteAccount"
+        app:layout_constraintStart_toStartOf="@+id/deleteacc"
+        app:layout_constraintTop_toBottomOf="@+id/deleteacc" />
+
+    <TextView
+        android:id="@+id/deleteacc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="308dp"
+        android:text="Delete Account"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

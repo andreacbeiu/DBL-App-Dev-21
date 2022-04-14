@@ -79,8 +79,6 @@ public class RestaurantAccountManagement extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
-
-
     }
 
 

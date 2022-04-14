@@ -46,7 +46,7 @@ public class RestaurantMainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
-        db.collection("restaurant_users")
+        db.collection("users")
                 .document(user.getUid().toString())
                 .get()
                 .addOnCompleteListener(task -> {
@@ -70,7 +70,7 @@ public class RestaurantMainActivity extends AppCompatActivity {
     }
 
     public void restaurantEdit(View view) {
-        CollectionReference users = db.collection("restaurant_users");
+        CollectionReference users = db.collection("users");
 
         Query ref = users.whereIn("type", Arrays.asList("employee"));
 

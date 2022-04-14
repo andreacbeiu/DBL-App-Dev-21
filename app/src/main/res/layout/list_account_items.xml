@@ -12,9 +12,15 @@
         android:padding="10dp"
         tools:layout_editor_absoluteY="27dp">
 
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_manage" />
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="331dp"
+            android:layout_height="54dp"
             android:orientation="vertical">
 
             <TextView
@@ -30,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="Email"
                 android:textSize="12sp" />
+
         </LinearLayout>
     </LinearLayout>
 

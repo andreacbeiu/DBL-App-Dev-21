@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.accounts.Account;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,6 +16,8 @@ import android.widget.TextView;
 import com.example.ui_screens.R;
 import com.example.ui_screens.data.Reservation;
 import com.example.ui_screens.data.Restaurant;
+import com.example.ui_screens.restaurants.RestaurantAccountActivity;
+import com.example.ui_screens.restaurants.RestaurantLoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -68,6 +72,19 @@ public class AccountActivity extends AppCompatActivity {
             email = user.getEmail();
             UsersEmail.setText(email);
         }
+    }
+
+    public void deleteAccount(View view) {
+        user.delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            startActivity(new Intent(AccountActivity.this, CustomerLoginActivity.class));
+                            Log.d("BookIt", "User account deleted.");
+                        }
+                    }
+                });
     }
 
 
