@@ -1,13 +1,21 @@
 package com.example.ui_screens.restaurants;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -15,7 +23,10 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.ui_screens.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -103,6 +114,17 @@ public class RestaurantEditActivity extends AppCompatActivity {
 
         etName = (EditText)findViewById(R.id.etEditInfoName);
         etDescription = (EditText)findViewById(R.id.etEditInfoDescription);
+//        map = findViewById(R.id.mapView2);
+        locationButton = findViewById(R.id.restLocation);
+
+
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(5000);
+        locationRequest.setFastestInterval(2000);
+
+        //locationButton.setOnClickListener(v -> getCurrentLocation());
+
 
         db = FirebaseFirestore.getInstance();
         db.collection("restaurants")
