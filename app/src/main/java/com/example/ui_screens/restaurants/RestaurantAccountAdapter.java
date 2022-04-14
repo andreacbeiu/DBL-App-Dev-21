@@ -23,57 +23,71 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class RestaurantAccountAdapter extends RecyclerView.Adapter<RestaurantAccountAdapter.MyViewHolder> {
+public class RestaurantAccountAdapter extends RecyclerView.Adapter<RestaurantAccountAdapter.ViewHolder> {
 
     private List<User> listUsers = new ArrayList<>();
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView name, email;
 
-        public MyViewHolder(final View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.nameaccount);
             email = (TextView) itemView.findViewById(R.id.emailaccount);
         }
+
+        public TextView getNameTv() {
+            return name;
+        }
+
+        public TextView getEmailTv() {
+            return email;
+        }
     }
 
     public RestaurantAccountAdapter(FirebaseFirestore db) {
-        CollectionReference users = db.collection("restaurant_users");
+        List<User> tempList = new ArrayList<>();
+
+        CollectionReference users = db.collection("users");
         Query ref = users.whereIn("type", Arrays.asList("employee", "manager"));
         ref.get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    this.listUsers = new ArrayList<>();
+
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        String email_id = document.getString("name");
-                        Log.d("BookIT", "email: " + email_id);
-                        User tempUser = new User("", email_id);
-                        listUsers.add(tempUser);
+                        String name = document.getString("name");
+                        String email_id = document.getString("email");
+                        String type = document.getString("type");
+
+                        User tempUser = new User(name, email_id, type);
+                        tempList.add(tempUser);
                     }
 
-                }
-                else {
-                    Log.d("BookIt", "Error getting documents: ", task.getException());
+                    this.listUsers = tempList;
+                    this.notifyDataSetChanged();
                 }
 
         });
+
     }
 
     @NonNull
     @Override
-    public RestaurantAccountAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RestaurantAccountAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_account_items, parent, false);
-        return new MyViewHolder(itemView);
+        return new ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RestaurantAccountAdapter.MyViewHolder holder, int position) {
-        holder.name.setText(listUsers.get(position).getName());
-        holder.email.setText(listUsers.get(position).getEmail());
+    public void onBindViewHolder(@NonNull RestaurantAccountAdapter.ViewHolder holder, int position) {
+        holder.getNameTv().setText(listUsers.get(position).getName());
+        holder.getEmailTv().setText(listUsers.get(position).getEmail());
+
     }
 
     @Override
     public int getItemCount() {
+        Log.d("BookIT", "users: " + listUsers.size());
         return listUsers.size();
     }
 }

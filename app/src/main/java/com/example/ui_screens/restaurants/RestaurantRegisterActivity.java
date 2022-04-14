@@ -133,12 +133,15 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
                     Map<String, Object> user = new HashMap<>();
                     user.put("name", name);
                     user.put("resId", documentReference.getId());
+                    user.put("email", email);
+                    user.put("phone", "");
+                    user.put("address", "");
                     user.put("type", "manager");
 
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(task -> {
                                 if(task.isSuccessful()) {
-                                    db.collection("restaurant_users")
+                                    db.collection("users")
                                             .document(task.getResult().getUser().getUid())
                                             .set(user)
                                             .addOnSuccessListener(userDocRef -> {

@@ -24,6 +24,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -71,9 +72,12 @@ public class RestaurantAccountManagement extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.listView);
 
-        RestaurantAccountAdapter rvRestaurantAccountAdapter = new RestaurantAccountAdapter(db);
-        recyclerView.setAdapter(rvRestaurantAccountAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        RestaurantAccountAdapter adapter = new RestaurantAccountAdapter(db);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
+
 
 
 

@@ -48,7 +48,6 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:onClick="restaurantAssociatedAccounts"
         android:layout_marginTop="8dp"
         android:text="Accounts"
         android:onClick="accountManagement"
