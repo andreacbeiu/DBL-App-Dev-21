@@ -110,5 +110,13 @@ public class RestaurantAccountManagement extends AppCompatActivity {
         this.finish();
     }
 
+    public void addAccount(View view) {
+        //sets the intent of the function: changing the activity
+        Intent intent = new Intent(RestaurantAccountManagement.this, RestaurantAddAccount.class);
+        //starts the activity associated with the intent
+        startActivity(intent);
+    }
+
+
 
 }

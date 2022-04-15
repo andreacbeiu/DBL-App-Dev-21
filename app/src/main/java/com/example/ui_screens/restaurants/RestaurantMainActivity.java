@@ -11,8 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ui_screens.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,12 +24,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class RestaurantMainActivity extends AppCompatActivity {
 
@@ -71,45 +64,9 @@ public class RestaurantMainActivity extends AppCompatActivity {
                                     }
                                 });
                     }
+
                 });
 
-        RecyclerView resRv = (RecyclerView) findViewById(R.id.reservationListRestMain);
-        ReservationsListAdapter adapter = new ReservationsListAdapter();
-        resRv.setAdapter(adapter);
-        resRv.setLayoutManager(new LinearLayoutManager(this));
-
-        SimpleDateFormat formatter = new SimpleDateFormat("d-M-yyyy");
-        Date date = new Date();
-        db.collection("reservation")
-                .whereEqualTo("date", formatter.format(date))
-                .get()
-                .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
-                        TextView numOfReservations = (TextView) findViewById(R.id.textReservedTables);
-                        ArrayList<ReservationsListAdapter.Reservation> reservations = new ArrayList<>();
-                        for(QueryDocumentSnapshot document : task.getResult()){
-                            Map<String, Object> data = document.getData();
-                            if(data.get("restaurant").equals(restaurantID)){
-                                ReservationsListAdapter.Reservation reservation = new ReservationsListAdapter.Reservation(
-                                        data.get("time").toString(),
-                                        data.get("message").toString(),
-                                        data.get("table").toString()
-                                );
-                                reservations.add(reservation);
-                            }
-                        }
-                        numOfReservations.setText("Reserved tables........." + reservations.size());
-                        adapter.setReservations(reservations);
-
-                    } else {
-                        Toast.makeText(this, "Failed to get reservations", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
 
     }
 
@@ -137,7 +94,7 @@ public class RestaurantMainActivity extends AppCompatActivity {
 
                     if (email.equals(email_check)) {
                         Log.d("BookIt", "if statement reached");
-                        Toast.makeText(RestaurantMainActivity.this, "Cannot login with customer account", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RestaurantMainActivity.this, "Cannot use this feature with employee account", Toast.LENGTH_SHORT).show();
                     } else {
                         //sets the intent of the function: changing the activity
                         Intent intent = new Intent(RestaurantMainActivity.this, RestaurantEditActivity.class);
@@ -157,7 +114,6 @@ public class RestaurantMainActivity extends AppCompatActivity {
     public void restaurantTables(View view) {
         //sets the intent of the function: changing the activity
         Intent intent = new Intent(this, RestaurantTablesActivity.class);
-        intent.putExtra("id", restaurantID);
         //starts the activity associated with the intent
         startActivity(intent);
     }

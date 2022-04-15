@@ -22,10 +22,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.w3c.dom.Document;
 
 import java.util.Arrays;
 
@@ -123,12 +126,53 @@ public class RestaurantLoginActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(RestaurantLoginActivity.this, "User Logged In Successfully", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(RestaurantLoginActivity.this, RestaurantMainActivity.class));
-                                    finishLogin();//finishes the login activity page
-                                    System.out.println("logged the user in and finished login page");
+                                    db.collection("employees").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
+
+
+
+                                                DocumentSnapshot document1 = task.getResult();
+
+                                                if (document1.exists()) {
+                                                    String pass = document1.getData().get("password").toString();
+                                                    System.out.println(pass);
+
+                                                    if (pass.equals(password)) {
+                                                        Toast.makeText(RestaurantLoginActivity.this, "Employee Logged In Successfully", Toast.LENGTH_SHORT).show();
+                                                        startActivity(new Intent(RestaurantLoginActivity.this, RestaurantMainActivity.class));
+                                                        finishLogin();//finishes the login activity page
+                                                        System.out.println("logged the user in and finished login page");
+                                                    }
+                                                } else {
+                                                    Toast.makeText(RestaurantLoginActivity.this, "Manager Logged In Successfully", Toast.LENGTH_SHORT).show();
+                                                    startActivity(new Intent(RestaurantLoginActivity.this, RestaurantMainActivity.class));
+                                                    finishLogin();//finishes the login activity page
+                                                    System.out.println("logged the user in and finished login page");
+                                                }
+//                                                else {
+////                                                    Query ref = db.collection("users").whereIn("email", Arrays.asList(email));
+////                                                            ref.get().addOnCompleteListener(task2 -> {
+////                                                                for (QueryDocumentSnapshot document : task2.getResult()) {
+////                                                                    String passTwo = document.getString("password");
+////                                                                    if (passTwo.equals("manager")) {
+////                                                                        Toast.makeText(RestaurantLoginActivity.this, "User Logged In Successfully", Toast.LENGTH_SHORT).show();
+////                                                                        startActivity(new Intent(RestaurantLoginActivity.this, RestaurantMainActivity.class));
+////                                                                        finishLogin();//finishes the login activity page
+////                                                                        System.out.println("logged the user in and finished login page");
+////                                                                    }
+////                                                                }
+////                                                            });
+//
+//                                                    Toast.makeText(RestaurantLoginActivity.this, "Employee account must have been deleted!", Toast.LENGTH_SHORT).show();
+//                                                }
+                                            }
+                                        }
+                                    });
+
                                 } else {
-                                    Toast.makeText(RestaurantLoginActivity.this, "User Login Failed", Toast.LENGTH_SHORT).show();
+
                                 }
                             }
                         });
@@ -148,6 +192,11 @@ public class RestaurantLoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
+    }
+
+    public String getEmailEmployee() {
+        String email = editTextEmail.getText().toString();
+        return email;
     }
 
     public void finishLogin() {this.finish(); }

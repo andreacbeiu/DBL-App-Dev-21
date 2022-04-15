@@ -58,6 +58,9 @@
             android:name=".restaurants.TableEditActivity"
             android:exported="false" />
         <activity
+            android:name=".restaurants.RestaurantAddAccount"
+            android:exported="false" />
+        <activity
             android:name=".customers.MainActivity"
             android:exported="true">
             <intent-filter>
