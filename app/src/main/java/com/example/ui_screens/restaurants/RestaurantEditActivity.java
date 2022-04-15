@@ -1,13 +1,22 @@
 package com.example.ui_screens.restaurants;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -15,9 +24,30 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.ui_screens.R;
+import com.example.ui_screens.restaurant_list.RestaurantListActivity;
+import com.firebase.geofire.GeoLocation;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -37,6 +67,11 @@ public class RestaurantEditActivity extends AppCompatActivity {
     EditText etDescription;
     ActivityResultLauncher<String> mGetContent, mGetPdf;
     FirebaseAuth mAuth;
+    private LocationRequest locationRequest;
+    Map map;
+    Button locationButton;
+    GeoLocation currentLocation;
+    ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +104,11 @@ public class RestaurantEditActivity extends AppCompatActivity {
 
                             ref.putStream(stream)
                                     .addOnFailureListener(e -> {
-                                        Toast.makeText(RestaurantEditActivity.this, "Uploading of image was unsuccesful", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RestaurantEditActivity.this, "Uploading of image was unsuccessful", Toast.LENGTH_SHORT).show();
                                     })
                                     .addOnSuccessListener(unused -> {
                                         restIV.setImageURI(uri);
-                                        Toast.makeText(RestaurantEditActivity.this, "Uploading of image was succesful", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RestaurantEditActivity.this, "Uploading of image was successful", Toast.LENGTH_SHORT).show();
                                     });
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
@@ -90,10 +125,10 @@ public class RestaurantEditActivity extends AppCompatActivity {
 
                             pdfRef.putStream(stream)
                                     .addOnFailureListener(unused -> {
-                                        Toast.makeText(RestaurantEditActivity.this, "Uploading of menu was unsuccesful", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RestaurantEditActivity.this, "Uploading of menu was unsuccessful", Toast.LENGTH_SHORT).show();
                                     })
                                     .addOnSuccessListener(unused -> {
-                                        Toast.makeText(RestaurantEditActivity.this, "Uploading of menu was succesful", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RestaurantEditActivity.this, "Uploading of menu was successful", Toast.LENGTH_SHORT).show();
                                     });
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
@@ -103,6 +138,25 @@ public class RestaurantEditActivity extends AppCompatActivity {
 
         etName = (EditText)findViewById(R.id.etEditInfoName);
         etDescription = (EditText)findViewById(R.id.etEditInfoDescription);
+        locationButton = findViewById(R.id.restLocation);
+
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(5000);
+        locationRequest.setFastestInterval(2000);
+
+//        MapView mapView = (MapView)findViewById(R.id.mapView2);
+
+//        mapView.onCreate(savedInstanceState);
+//        mapView.getMapAsync(googleMap -> {
+//            LatLng coordinates = new LatLng(5, 6);
+//            googleMap.addMarker(new MarkerOptions().position(coordinates).title("address"));
+//            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 15));
+//            mapView.onResume();
+//        });
+
+        locationButton.setOnClickListener(v -> getCurrentLocation());
+        img = (ImageView) findViewById(R.id.ivlocationImage);
 
         db = FirebaseFirestore.getInstance();
         db.collection("restaurants")
@@ -115,6 +169,13 @@ public class RestaurantEditActivity extends AppCompatActivity {
                         etDescription.setText(data.get("description").toString());
                     }
                 });
+
+        ImageView img = new ImageView(this);
+        img.setImageResource(R.drawable.location_image);
+    }
+
+    public void setLocation(){
+
     }
 
     public void save(View view){
@@ -124,7 +185,7 @@ public class RestaurantEditActivity extends AppCompatActivity {
                 .document(id)
                 .set(data)
                 .addOnSuccessListener(unused -> {
-                    Toast.makeText(this, "Saving was succesful", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Saving was successful", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(unused -> {
                     Toast.makeText(this, "ERROR: data was not saved", Toast.LENGTH_SHORT).show();
@@ -148,7 +209,7 @@ public class RestaurantEditActivity extends AppCompatActivity {
         return true;
     }
 
-    //Handles actions in the topbar menu
+    //Handles actions in the top bar menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
@@ -174,5 +235,120 @@ public class RestaurantEditActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            if (!isGPSEnabled())
+                turnOnGPS();
+            else {
+                getCurrentLocation();
+                //getNearbyRestaurants();
+            }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 2)
+            if (resultCode == Activity.RESULT_OK) {
+                getCurrentLocation();
+                //getNearbyRestaurants();
+            }
+    }
+
+    public void registerLocation(View view){
+        if (!isGPSEnabled())
+            turnOnGPS();
+        else {
+            img.setImageResource(R.drawable.current);
+            System.out.println("macac");
+            getCurrentLocation();
+            //getNearbyRestaurants();
+        }
+    }
+
+    public void getCurrentLocation() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(RestaurantEditActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if (isGPSEnabled()) {
+                    LocationServices.getFusedLocationProviderClient(RestaurantEditActivity.this)
+                            .requestLocationUpdates(locationRequest, new LocationCallback() {
+                                @Override
+                                public void onLocationResult(@NonNull LocationResult locationResult) {
+                                    super.onLocationResult(locationResult);
+
+                                    LocationServices.getFusedLocationProviderClient(RestaurantEditActivity.this)
+                                            .removeLocationUpdates(this);
+
+                                    if (locationResult != null && locationResult.getLocations().size() >0){
+
+                                        int index = locationResult.getLocations().size() - 1;
+                                        double latitude = locationResult.getLocations().get(index).getLatitude();
+                                        double longitude = locationResult.getLocations().get(index).getLongitude();
+                                        currentLocation = new GeoLocation(latitude, longitude);
+                                        Toast.makeText(RestaurantEditActivity.this, "The location has been registered!", Toast.LENGTH_SHORT).show();
+                                        System.out.println("help");
+                                    }
+                                }
+                            }, Looper.getMainLooper());
+
+                } else
+                    turnOnGPS();
+
+            } else
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        }
+    }
+
+    private void turnOnGPS() {
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest);
+        builder.setAlwaysShow(true);
+
+        Task<LocationSettingsResponse> result = LocationServices.getSettingsClient(getApplicationContext())
+                .checkLocationSettings(builder.build());
+
+        result.addOnCompleteListener(task -> {
+            try {
+                LocationSettingsResponse response = task.getResult(ApiException.class);
+                Toast.makeText(RestaurantEditActivity.this, "GPS is already turned on", Toast.LENGTH_SHORT).show();
+
+            } catch (ApiException e) {
+                switch (e.getStatusCode()) {
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        try {
+                            ResolvableApiException resolvableApiException = (ResolvableApiException) e;
+                            resolvableApiException.startResolutionForResult(RestaurantEditActivity.this, 2);
+                        } catch (IntentSender.SendIntentException ex) {
+                            ex.printStackTrace();
+                        }
+                        break;
+
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        //Device does not have location
+                        break;
+                }
+            }
+        });
+
+    }
+
+    private boolean isGPSEnabled() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        boolean enabled = false;
+
+        try {
+            enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch(Exception ex) {}
+
+        return enabled;
     }
 }

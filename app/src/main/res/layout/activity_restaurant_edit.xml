@@ -6,19 +6,6 @@
     android:layout_height="match_parent">
 
 
-    <ImageView
-        android:id="@+id/ivEditRestaurantImage2"
-        android:layout_width="266dp"
-        android:layout_height="144dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="4dp"
-        android:padding="10dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivEditRestaurantImage"
-        app:srcCompat="@drawable/default_restaurant" />
-
     <TextView
         android:id="@+id/textView29"
         android:layout_width="100dp"
@@ -45,7 +32,7 @@
         app:layout_constraintHorizontal_bias="0.102"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.275" />
 
     <TextView
         android:id="@+id/textView30"
@@ -151,14 +138,12 @@
         android:layout_width="261dp"
         android:layout_height="44dp"
         android:layout_gravity="center"
-        android:layout_marginTop="68dp"
+        android:layout_marginBottom="56dp"
         android:onClick="save"
         android:text="Save changes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivEditRestaurantImage2"
-        app:layout_constraintVertical_bias="0.441" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/ivEditRestaurantImage"
@@ -188,48 +173,60 @@
         app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
     <Button
-        android:id="@+id/button7"
-        android:layout_width="98dp"
-        android:layout_height="46dp"
-        android:layout_gravity="center"
-        android:onClick="chooseImage"
-        android:text="Update location"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.102"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView29"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
         android:id="@+id/button8"
         android:layout_width="84dp"
         android:layout_height="64dp"
         android:layout_gravity="center"
+        android:layout_marginBottom="28dp"
         android:onClick="viewMenu"
         android:text="Current menu"
         android:textSize="10sp"
         app:layout_constraintBottom_toTopOf="@+id/button5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.246"
-        app:layout_constraintStart_toEndOf="@+id/textView31"
-        app:layout_constraintTop_toBottomOf="@+id/ivEditRestaurantImage2"
-        app:layout_constraintVertical_bias="0.209" />
+        app:layout_constraintHorizontal_bias="0.189"
+        app:layout_constraintStart_toEndOf="@+id/textView31" />
 
     <Button
         android:id="@+id/button13"
         android:layout_width="84dp"
         android:layout_height="64dp"
         android:layout_gravity="center"
+        android:layout_marginBottom="28dp"
         android:onClick="chooseMenu"
         android:text="Update menu"
         android:textSize="10sp"
         app:layout_constraintBottom_toTopOf="@+id/button5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.733"
-        app:layout_constraintStart_toEndOf="@+id/textView31"
-        app:layout_constraintTop_toBottomOf="@+id/ivEditRestaurantImage2"
-        app:layout_constraintVertical_bias="0.209" />
+        app:layout_constraintHorizontal_bias="0.262"
+        app:layout_constraintStart_toEndOf="@+id/button8" />
+
+    <ImageView
+        android:id="@+id/ivlocationImage"
+        android:layout_width="272dp"
+        android:layout_height="152dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="228dp"
+        android:layout_marginEnd="4dp"
+        android:padding="10dp"
+        android:onClick="registerLocation"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etEditInfoName"
+        app:srcCompat="@drawable/location_image" />
+
+    <Button
+        android:id="@+id/restLocation"
+        android:layout_width="98dp"
+        android:layout_height="46dp"
+        android:layout_gravity="center"
+        android:textSize="10sp"
+        android:onClick="registerLocation"
+        android:text="Update location"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.102"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView29"
+        app:layout_constraintVertical_bias="0.0"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
