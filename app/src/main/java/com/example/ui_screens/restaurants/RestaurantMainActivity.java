@@ -114,6 +114,7 @@ public class RestaurantMainActivity extends AppCompatActivity {
     public void restaurantTables(View view) {
         //sets the intent of the function: changing the activity
         Intent intent = new Intent(this, RestaurantTablesActivity.class);
+        intent.putExtra("id", restaurantID);
         //starts the activity associated with the intent
         startActivity(intent);
     }
