@@ -14,8 +14,8 @@
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        app:layout_constraintStart_toStartOf="@+id/textView32"
-        app:layout_constraintTop_toBottomOf="@+id/textView32" />
+        app:layout_constraintStart_toStartOf="@+id/tvAddAccount"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddAccount" />
 
     <EditText
         android:id="@+id/passacc"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/emailacc" />
 
     <TextView
-        android:id="@+id/textView32"
+        android:id="@+id/tvAddAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"

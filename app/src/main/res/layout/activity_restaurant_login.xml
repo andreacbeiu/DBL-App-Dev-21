@@ -7,7 +7,7 @@
     tools:context=".restaurants.RestaurantLoginActivity">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tvCusLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/restlogin_title"
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCusLogin" />
 
     <EditText
         android:id="@+id/passwordlogin"
@@ -59,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/passwordlogin" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/separator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="92dp"
@@ -69,17 +69,17 @@
         app:layout_constraintTop_toBottomOf="@+id/loginbutton" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/question1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/restlogin_noacc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/separator" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btMakeAccountCustomer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -87,6 +87,6 @@
         android:onClick="restaurantRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/question1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
