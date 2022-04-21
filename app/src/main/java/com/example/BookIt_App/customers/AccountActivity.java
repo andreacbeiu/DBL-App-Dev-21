@@ -45,6 +45,7 @@ public class AccountActivity extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         UsersEmail = (TextView) findViewById(R.id.tvUserEmail);
 
+        //setting up recyclerview classes to make sure that lists work accordingly
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         RecyclerView rvReservations = findViewById(R.id.rvReservations);
         AccountAdapter rvReservationsAdapter = new AccountAdapter(db, user.getUid());
@@ -59,7 +60,10 @@ public class AccountActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        //getting the current signed in user object
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        //if there is no user signed in, show an error
         if (currentUser == null) {
             UsersEmail.setText("You are not signed in!");
 
@@ -87,6 +91,7 @@ public class AccountActivity extends AppCompatActivity {
     //Handles actions in the topbar menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        //using switch case to allow for different actions
         switch(item.getItemId()) {
             case R.id.action_search:
                 startActivity(new Intent(this, SearchPageActivity.class));

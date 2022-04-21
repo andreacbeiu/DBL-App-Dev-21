@@ -68,6 +68,7 @@ public class RestaurantListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_list);
 
+        //initiate databases
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         RecyclerView rvRestaurants = findViewById(R.id.rvRestaurants);
 

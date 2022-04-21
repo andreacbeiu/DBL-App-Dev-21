@@ -44,8 +44,11 @@ public class CustomerLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_login);
 
-       db = FirebaseFirestore.getInstance();
 
+        //initialize the firestore database
+        db = FirebaseFirestore.getInstance();
+
+        //assigning var names to each xml unit
         editTextEmail = (EditText) findViewById(R.id.loginemail);
         editTextPassword = (EditText) findViewById(R.id.passwordlogin);
         mAuth = FirebaseAuth.getInstance();
@@ -86,12 +89,17 @@ public class CustomerLoginActivity extends AppCompatActivity {
        loginUser();
     }
 
+    //finishes the login
     public void finishLogin() {this.finish();}
 
+    //method to login the user using firebase
     public void loginUser(){
+        //store the email, pass in a var to be used later
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
 
+
+        //checks to make sure no errors occur when logging in
         if (email.isEmpty()) {
             editTextEmail.setError("Email Cannot Be Empty");
             editTextEmail.requestFocus();
@@ -105,8 +113,10 @@ public class CustomerLoginActivity extends AppCompatActivity {
 
         }
 
+        //store a reference to the db to be used later
         CollectionReference users = db.collection("restaurant_users");
 
+        //creating a query to check that only customers are allowed to enter from this page
         Query ref = users.whereIn("type", Arrays.asList("manager", "employee"));
 
         ref.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -114,23 +124,25 @@ public class CustomerLoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 String email_check = "";
                 if (task.isSuccessful()) {
+                    //for each user that is a manager/employee
                     for (QueryDocumentSnapshot document : task.getResult()) {
-
+                        //get the string email id for that user
                         String email_id = document.getString("name");
 
+                        //check if the email id is the same as inputted email id
                         if (email_id.equals(email)) {
                             email_check = email_id;
                             Log.d("BookIt", document.getId() + " => " + document.getData() + email_check);
                         }
                     }
-
+                    //if the emails are the same, then produce a toast and cancel the login
                     if (email.equals(email_check)) {
                         Toast.makeText(CustomerLoginActivity.this, "Cannot login with restaurant account", Toast.LENGTH_SHORT).show();
-                    } else {
+                    } else { //otherwise continue with firebase login
                         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
+                                if (task.isSuccessful()) { //making toasts for when the task is successful
                                     Toast.makeText(CustomerLoginActivity.this, "User Logged In Successfully", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(CustomerLoginActivity.this, RestaurantListActivity.class));
                                     finishLogin();
