@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ui_screens">
+    package="com.example.BookIt_App">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -15,53 +15,53 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UI_screens">
         <activity
-            android:name=".restaurants.RestaurantAccountManagement"
+            android:name="com.example.BookIt_App.restaurants.RestaurantAccountManagement"
             android:exported="false" />
         <activity
-            android:name=".restaurants.RestaurantAccountActivity"
+            android:name="com.example.BookIt_App.restaurants.RestaurantAccountActivity"
             android:exported="false" />
         <activity
-            android:name=".customers.AccountActivity"
+            android:name="com.example.BookIt_App.customers.AccountActivity"
             android:exported="false" />
         <activity
-            android:name=".customers.SearchPageActivity"
+            android:name="com.example.BookIt_App.customers.SearchPageActivity"
             android:exported="false" />
         <activity
-            android:name=".customers.ViewRestaurantActivity"
+            android:name="com.example.BookIt_App.customers.ViewRestaurantActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.login.RegistrationActivity"
+            android:name="com.example.BookIt_App.ui.login.RegistrationActivity"
             android:exported="false"
             android:label="@string/title_activity_registration" />
         <activity
-            android:name=".restaurants.RestaurantLoginActivity"
+            android:name="com.example.BookIt_App.restaurants.RestaurantLoginActivity"
             android:exported="false" />
         <activity
-            android:name=".customers.CustomerLoginActivity"
+            android:name="com.example.BookIt_App.customers.CustomerLoginActivity"
             android:exported="false" />
         <activity
-            android:name=".restaurant_list.RestaurantListActivity"
+            android:name="com.example.BookIt_App.restaurant_list.RestaurantListActivity"
             android:exported="false" />
         <activity
-            android:name=".restaurants.RestaurantMainActivity"
+            android:name="com.example.BookIt_App.restaurants.RestaurantMainActivity"
             android:exported="false" />
         <activity
-            android:name=".restaurants.RestaurantEditActivity"
+            android:name="com.example.BookIt_App.restaurants.RestaurantEditActivity"
             android:exported="false" />
         <activity
-            android:name=".restaurants.RestaurantTablesActivity"
+            android:name="com.example.BookIt_App.restaurants.RestaurantTablesActivity"
             android:exported="false" />
         <activity
-            android:name=".restaurants.RestaurantRegisterActivity"
+            android:name="com.example.BookIt_App.restaurants.RestaurantRegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".restaurants.TableEditActivity"
+            android:name="com.example.BookIt_App.restaurants.TableEditActivity"
             android:exported="false" />
         <activity
-            android:name=".restaurants.RestaurantAddAccount"
+            android:name="com.example.BookIt_App.restaurants.RestaurantAddAccount"
             android:exported="false" />
         <activity
-            android:name=".customers.MainActivity"
+            android:name="com.example.BookIt_App.customers.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
