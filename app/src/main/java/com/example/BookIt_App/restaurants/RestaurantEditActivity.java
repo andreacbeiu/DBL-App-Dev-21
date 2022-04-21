@@ -30,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.BookIt_App.R;
+import com.example.BookIt_App.universal.ViewPdfActivity;
 import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -194,7 +195,8 @@ public class RestaurantEditActivity extends AppCompatActivity {
     public void viewMenu(View view){
         StorageReference menuRef = FirebaseStorage.getInstance().getReference().child("menus/" + id + ".pdf");
         menuRef.getDownloadUrl().addOnSuccessListener(uri -> {
-            Intent i = new Intent(Intent.ACTION_VIEW, uri);
+            Intent i = new Intent(this, ViewPdfActivity.class);
+            i.putExtra("url", uri.toString());
             startActivity(i);
         }).addOnFailureListener(unused -> {
             Toast.makeText(this, "No menu available", Toast.LENGTH_SHORT).show();
