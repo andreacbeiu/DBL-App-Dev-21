@@ -130,7 +130,7 @@ public class Restaurant {
         HashMap<String, Object> data = new HashMap<>(); //Store all data in a HashMap which is accepted by FireBase
         data.put("name", this.name);
         data.put("description", this.description);
-        data.put("rating", this.rating);
+        data.put("rating", ((Long)this.rating).doubleValue());
         data.put("location", null);
 
         ArrayList<HashMap<String, Object>> tablesList = new ArrayList<>(); //Convert the list of tables into a list of HashMaps so FireBase accepts it

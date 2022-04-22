@@ -16,6 +16,7 @@ public class ReservationsListAdapter extends RecyclerView.Adapter<ReservationsLi
 
     private List<Reservation> reservations = new ArrayList<>();
 
+    //Class to hold reservations in the adapter
     public static class Reservation{
         String time, message, table;
         Reservation(String time, String message, String table){

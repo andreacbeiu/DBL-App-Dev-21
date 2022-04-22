@@ -27,12 +27,13 @@ public class TableEditActivity extends AppCompatActivity {
     }
 
     public void saveTable(View view){
+        //Get tables from intent
         Bundle args = getIntent().getBundleExtra("bundle");
         TablesDataHolder holder = (TablesDataHolder) args
                 .getSerializable("tables");
         ArrayList<HashMap<String, Object>> tables = new ArrayList<>();
 
-        for(SerializableTable table: holder.tables){
+        for(SerializableTable table: holder.tables){ //Create hashmap from tables to be compatible with FireBase
             HashMap<String, Object> map = new HashMap<>();
             map.put("occupied", false);
             map.put("seats", table.getSeats());
@@ -41,20 +42,16 @@ public class TableEditActivity extends AppCompatActivity {
 
         int pos = getIntent().getIntExtra("position", tables.size());
 
-        System.out.println(pos);
-        System.out.println(holder.tables.size());
-        System.out.println(tables.size());
-
-        if(pos == tables.size()){
+        if(pos == tables.size()){ //If position is not in array, create entirely new table
             HashMap<String, Object> map = new HashMap<>();
             map.put("seats", Integer.parseInt(etSeats.getText().toString()));
             map.put("occupied", false);
             tables.add(map);
-        } else {
+        } else { //Else just update the table at the position
             tables.get(pos).put("seats", Integer.parseInt(etSeats.getText().toString()));
         }
 
-        DocumentReference resRef = FirebaseFirestore.getInstance()
+        DocumentReference resRef = FirebaseFirestore.getInstance() //Upload the data
                 .collection("restaurants")
                 .document(getIntent().getStringExtra("id"));
         resRef.update("tables", tables)
@@ -64,16 +61,17 @@ public class TableEditActivity extends AppCompatActivity {
             Toast.makeText(this, "Failed to save", Toast.LENGTH_SHORT).show();
         });
 
-        this.finish();
+        this.finish(); //Finish the Activity
     }
 
     public void deleteTable(View view){
+        //Get tables from intent
         Bundle args = getIntent().getBundleExtra("bundle");
         TablesDataHolder holder = (TablesDataHolder) args
                 .getSerializable("tables");
         ArrayList<HashMap<String, Object>> tables = new ArrayList<>();
 
-        for(SerializableTable table: holder.tables){
+        for(SerializableTable table: holder.tables){ //Convert tables to map
             HashMap<String, Object> map = new HashMap<>();
             map.put("occupied", false);
             map.put("seats", table.getSeats());
@@ -81,11 +79,11 @@ public class TableEditActivity extends AppCompatActivity {
         }
         int pos = getIntent().getIntExtra("position", tables.size());
 
-        if(pos == tables.size()){
+        if(pos == tables.size()){ //If table not in list, just return
             return;
         }
 
-        tables.remove(pos);
+        tables.remove(pos); //Else remove table and upload the updated list
         DocumentReference resRef = FirebaseFirestore.getInstance()
                 .collection("restaurants")
                 .document(getIntent().getStringExtra("id"));

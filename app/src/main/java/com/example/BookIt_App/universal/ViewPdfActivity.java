@@ -18,9 +18,8 @@ public class ViewPdfActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pdf);
         String url = getIntent().getStringExtra("url");
-        System.out.println(url);
 
-        WebView wv = (WebView) findViewById(R.id.wvViewPdf);
+        WebView wv = (WebView) findViewById(R.id.wvViewPdf); //Find WebView
         wv.setWebViewClient(new WebViewClient());
         wv.getSettings().setJavaScriptEnabled(true);
         try {

@@ -27,7 +27,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     private List<Restaurant> restaurants = new ArrayList<>();
     private final OnItemClickListener listener = null;
 
-
+    //For managing the views in template
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView nametv;
         private final TextView descriptiontv;
@@ -56,7 +56,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     public RestaurantListAdapter(FirebaseFirestore db){
         db.collection("restaurants")
-                .get()
+                .get() //Get all restaurants in database
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()) {
                         this.restaurants = new ArrayList<>();
@@ -65,10 +65,11 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
                             List<Table> tables = new ArrayList<>();
 
                             for(Map<String, Object> entry : (ArrayList<Map<String, Object>>) document.getData().get("tables")) {
-                                Table table = new Table(((Long) entry.get("seats")).intValue());
+                                Table table = new Table(((Long) entry.get("seats")).intValue()); //Convert maps to tables
                                 tables.add(table);
                             }
 
+                            //Create new restaurant and add it to the list with data
                             Restaurant tempRestaurant = new Restaurant(document.getId(), document.getData().get("name").toString(),
                                     document.getData().get("description").toString(), ((Double) document.getData().get("rating")).longValue(), tables);
                             restaurants.add(tempRestaurant);

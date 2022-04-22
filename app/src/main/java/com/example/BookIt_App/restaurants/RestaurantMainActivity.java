@@ -47,7 +47,7 @@ public class RestaurantMainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
-        db.collection("users")
+        db.collection("users") //Get correct restaurant from database with user id
                 .document(user.getUid().toString())
                 .get()
                 .addOnCompleteListener(task -> {

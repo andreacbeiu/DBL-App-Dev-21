@@ -38,16 +38,17 @@ public class RestaurantTablesActivity extends AppCompatActivity {
         rvTables.addOnItemTouchListener(new RecyclerTouchListener(this, rvTables, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                //Create intent and bundle to pass data
                 Intent i = new Intent(RestaurantTablesActivity.this, TableEditActivity.class);
                 Bundle args = new Bundle();
 
-                ArrayList<SerializableTable> serTables = new ArrayList<>();
+                ArrayList<SerializableTable> serTables = new ArrayList<>(); //Convert tables to serializable data so they can be passed
                 for(RestaurantTablesAdapter.Table table: adapter.getTables()){
                     serTables.add(new SerializableTable((int)table.getSeats()));
                 }
                 TablesDataHolder holder = new TablesDataHolder(serTables);
 
-                args.putSerializable("tables", holder);
+                args.putSerializable("tables", holder); //Put all extra data
                 i.putExtra("bundle", args);
                 i.putExtra("position", position);
                 i.putExtra("seats", adapter.getNumSeats(position));
@@ -65,7 +66,7 @@ public class RestaurantTablesActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.refresh();
+        adapter.refresh(); //Fetch new data on resume
     }
 
     public void openEditTable(View view) {
@@ -73,6 +74,7 @@ public class RestaurantTablesActivity extends AppCompatActivity {
         Intent i = new Intent(this, TableEditActivity.class);
         Bundle args = new Bundle();
 
+        //All the same as in the ontap listener, but with position as size so it is a new table
         ArrayList<SerializableTable> serTables = new ArrayList<>();
         for(RestaurantTablesAdapter.Table table: adapter.getTables()){
             serTables.add(new SerializableTable((int)table.getSeats()));

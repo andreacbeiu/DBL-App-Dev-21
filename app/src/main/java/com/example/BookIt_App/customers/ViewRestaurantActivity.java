@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.BookIt_App.R;
 import com.example.BookIt_App.data.Reservation;
+import com.example.BookIt_App.universal.ViewPdfActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -76,7 +77,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
         restaurantId = getIntent().getExtras().getString("id");
         str_restaurantId = restaurantId;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("restaurants")
+        db.collection("restaurants") //Get data from database and apply it
                 .document(restaurantId)
                 .get()
                 .addOnCompleteListener(task -> {
@@ -338,7 +339,8 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
     public void viewMenu(View view){
         StorageReference menuRef = FirebaseStorage.getInstance().getReference().child("menus/" + restaurantId+".pdf");
         menuRef.getDownloadUrl().addOnSuccessListener(uri -> {
-            Intent i = new Intent(Intent.ACTION_VIEW, uri);
+            Intent i = new Intent(this, ViewPdfActivity.class);
+            i.putExtra("url", uri.toString());
             startActivity(i);
         }).addOnFailureListener(unused -> {
             Toast.makeText(this, "No menu available", Toast.LENGTH_SHORT).show();
