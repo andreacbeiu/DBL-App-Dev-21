@@ -49,7 +49,7 @@
             app:layout_constraintTop_toBottomOf="@+id/etEditTableSeats" />
 
         <Button
-            android:id="@+id/button89"
+            android:id="@+id/btCurrentMenu9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="deleteTable"

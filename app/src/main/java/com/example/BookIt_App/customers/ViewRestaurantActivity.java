@@ -70,7 +70,7 @@ public class ViewRestaurantActivity extends AppCompatActivity implements View.On
         //selecting book button + adding click listener
         Button bookbutton = findViewById(R.id.bookbutton);
         bookbutton.setOnClickListener(this);
-        map = (TextView) findViewById(R.id.textView16);
+        map = (TextView) findViewById(R.id.tvMenuShow);
 
         //setting restaurant name to title of page
         restaurantId = getIntent().getExtras().getString("id");

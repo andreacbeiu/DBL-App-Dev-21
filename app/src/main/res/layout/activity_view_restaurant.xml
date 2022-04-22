@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/tvDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -53,7 +53,7 @@
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12"
+            app:layout_constraintTop_toBottomOf="@+id/tvDistance"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <Button
@@ -68,7 +68,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ivViewRestaurant" />
 
         <TextView
-            android:id="@+id/textView15"
+            android:id="@+id/separator5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -78,7 +78,7 @@
             app:layout_constraintTop_toBottomOf="@+id/bookbutton" />
 
         <TextView
-            android:id="@+id/textView16"
+            android:id="@+id/tvMenuShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -86,10 +86,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.21"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+            app:layout_constraintTop_toBottomOf="@+id/separator5" />
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/tvMapShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -97,10 +97,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.209"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView16" />
+            app:layout_constraintTop_toBottomOf="@+id/tvMenuShow" />
 
         <Button
-            android:id="@+id/button9"
+            android:id="@+id/btMenuShow"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -109,16 +109,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.913"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+            app:layout_constraintTop_toBottomOf="@+id/separator5" />
 
         <Button
-            android:id="@+id/button10"
+            android:id="@+id/btMapShow"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:text="Map"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.913"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button9" />
+            app:layout_constraintTop_toBottomOf="@+id/btMenuShow" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
