@@ -1,6 +1,7 @@
 package com.example.BookIt_App.data;
 
 public class Table {
+
     private int seats;
     private boolean seatOccupied;
     private Restaurant restaurant;
@@ -28,5 +29,9 @@ public class Table {
 
     public void setSeatNo(int seats){
         this.seats = seats;
+    }
+
+    public int getSeats() {
+        return seats;
     }
 }

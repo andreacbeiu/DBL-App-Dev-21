@@ -30,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.BookIt_App.R;
+import com.example.BookIt_App.data.Restaurant;
 import com.example.BookIt_App.universal.ViewPdfActivity;
 import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.common.api.ApiException;
@@ -67,6 +68,7 @@ public class RestaurantEditActivity extends AppCompatActivity {
     EditText etDescription;
     ActivityResultLauncher<String> mGetContent, mGetPdf;
     FirebaseAuth mAuth;
+    Restaurant restaurant;
     private LocationRequest locationRequest;
     Map map;
     Button locationButton;
@@ -78,33 +80,47 @@ public class RestaurantEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_edit);
 
+
+
+        etName = (EditText)findViewById(R.id.etEditInfoName);
+        etDescription = (EditText)findViewById(R.id.etEditInfoDescription);
+        final ImageView restIV = (ImageView)findViewById(R.id.ivEditRestaurantImage);
+
         mAuth = FirebaseAuth.getInstance();
 
         id = getIntent().getStringExtra("resId");
 
-        final StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" + id + ".jpg");
-        final StorageReference pdfRef = FirebaseStorage.getInstance().getReference().child("menus/" + id + ".pdf");
-        final ImageView restIV = (ImageView)findViewById(R.id.ivEditRestaurantImage);
-        final long ONE_MEGABYTE = 1024*1024;
-
-        ref.getBytes(ONE_MEGABYTE * 2).addOnSuccessListener(bytes -> {
-            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            restIV.setImageBitmap(bmp);
-        }).addOnFailureListener(unused -> {
-            restIV.setImageDrawable(getDrawable(R.drawable.default_restaurant));
+        Restaurant.makeFromId(id, res -> {
+            this.restaurant = res;
+            etName.setText(res.getName());
+            etDescription.setText(res.getDescription());
+            restaurant.getImageBytes(bytes -> {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                restIV.setImageBitmap(bmp);
+            }, unused -> {
+                restIV.setImageDrawable(getDrawable(R.drawable.default_restaurant));
+            });
+        }, unused -> {
+            Toast.makeText(this, "Could not retrieve restaurant data", Toast.LENGTH_SHORT).show();
         });
 
-        mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+        final StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" + id + ".jpg");
+        final StorageReference pdfRef = FirebaseStorage.getInstance().getReference().child("menus/" + id + ".pdf");
+        final long ONE_MEGABYTE = 1024*1024;
+
+
+
+        mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(), //Lets user select a file
                 new ActivityResultCallback<Uri>() {
                     @Override
                     public void onActivityResult(Uri uri) {
                         try {
                             System.out.println(uri.getPath());
-                            InputStream stream = getContentResolver().openInputStream(uri);
+                            InputStream stream = getContentResolver().openInputStream(uri); //Get input stream to upload from uri
 
-                            ref.putStream(stream)
+                            ref.putStream(stream) //Upload it to FireBase using the reference created earlier
                                     .addOnFailureListener(e -> {
-                                        Toast.makeText(RestaurantEditActivity.this, "Uploading of image was unsuccessful", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RestaurantEditActivity.this, "ERROR: could not upload image", Toast.LENGTH_SHORT).show();
                                     })
                                     .addOnSuccessListener(unused -> {
                                         restIV.setImageURI(uri);
@@ -115,7 +131,7 @@ public class RestaurantEditActivity extends AppCompatActivity {
                         }
                     }
                 });
-        mGetPdf = registerForActivityResult(new ActivityResultContracts.GetContent(),
+        mGetPdf = registerForActivityResult(new ActivityResultContracts.GetContent(), //Same as mGetContent, but used for the menus
                 new ActivityResultCallback<Uri>() {
                     @Override
                     public void onActivityResult(Uri uri) {
@@ -136,8 +152,6 @@ public class RestaurantEditActivity extends AppCompatActivity {
                     }
                 });
 
-        etName = (EditText)findViewById(R.id.etEditInfoName);
-        etDescription = (EditText)findViewById(R.id.etEditInfoDescription);
         locationButton = findViewById(R.id.restLocation);
 
         locationRequest = LocationRequest.create();
@@ -158,18 +172,6 @@ public class RestaurantEditActivity extends AppCompatActivity {
         locationButton.setOnClickListener(v -> getCurrentLocation());
         img = (ImageView) findViewById(R.id.ivlocationImage);
 
-        db = FirebaseFirestore.getInstance();
-        db.collection("restaurants")
-                .document(id)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
-                        data = (HashMap<String, Object>)task.getResult().getData();
-                        etName.setText(data.get("name").toString());
-                        etDescription.setText(data.get("description").toString());
-                    }
-                });
-
         ImageView img = new ImageView(this);
         img.setImageResource(R.drawable.location_image);
     }
@@ -179,27 +181,22 @@ public class RestaurantEditActivity extends AppCompatActivity {
     }
 
     public void save(View view){
-        data.put("name", etName.getText().toString());
-        data.put("description", etDescription.getText().toString());
-        db.collection("restaurants")
-                .document(id)
-                .set(data)
-                .addOnSuccessListener(unused -> {
-                    Toast.makeText(this, "Saving was successful", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(unused -> {
-                    Toast.makeText(this, "ERROR: data was not saved", Toast.LENGTH_SHORT).show();
-                });
+        restaurant.setName(etName.getText().toString()); //Update restaurant data to filled in data
+        restaurant.setDescription(etDescription.getText().toString());
+        restaurant.uploadData(unused -> { //Upload it
+            Toast.makeText(this, "Succesfully saved data", Toast.LENGTH_SHORT).show();
+        }, unused -> {
+            Toast.makeText(this, "ERROR: data was not saved", Toast.LENGTH_SHORT).show();
+        });
     }
 
     public void viewMenu(View view){
-        StorageReference menuRef = FirebaseStorage.getInstance().getReference().child("menus/" + id + ".pdf");
-        menuRef.getDownloadUrl().addOnSuccessListener(uri -> {
+        restaurant.getMenuUrl(uri -> { //Get the menu from the
             Intent i = new Intent(this, ViewPdfActivity.class);
-            i.putExtra("url", uri.toString());
+            i.putExtra("url", uri);
             startActivity(i);
-        }).addOnFailureListener(unused -> {
-            Toast.makeText(this, "No menu available", Toast.LENGTH_SHORT).show();
+        }, unused -> {
+            Toast.makeText(this, "Failed to get menu", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -226,10 +223,12 @@ public class RestaurantEditActivity extends AppCompatActivity {
     }
 
     public void chooseImage(View view){
-        mGetContent.launch("image/*");
+        mGetContent.launch("image/*"); //Let user select files that are images
     }
 
-    public void chooseMenu(View view) { mGetPdf.launch("application/pdf"); }
+    public void chooseMenu(View view) {
+        mGetPdf.launch("application/pdf"); //Let user select files that are of type pdf
+    }
 
     //close activity upon leaving through back button
     @Override

@@ -24,11 +24,11 @@ public class ViewPdfActivity extends AppCompatActivity {
         wv.setWebViewClient(new WebViewClient());
         wv.getSettings().setJavaScriptEnabled(true);
         try {
-            url = URLEncoder.encode(url,"UTF-8");
+            url = URLEncoder.encode(url,"UTF-8"); //Encode not allowed characters
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         wv.getSettings().supportZoom();
-        wv.loadUrl("http://drive.google.com/viewerng/viewer?embedded=true&url=" + url);
+        wv.loadUrl("http://drive.google.com/viewerng/viewer?embedded=true&url=" + url); //drive url needed to correctly load the pdf
     }
 }

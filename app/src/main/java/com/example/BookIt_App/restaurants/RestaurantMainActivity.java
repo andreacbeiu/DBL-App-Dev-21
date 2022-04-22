@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.BookIt_App.R;
+import com.example.BookIt_App.data.Restaurant;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +33,7 @@ public class RestaurantMainActivity extends AppCompatActivity {
     private FirebaseFirestore db2;
     FirebaseAuth mAuth;
     FirebaseUser user;
-    String restaurantID;
+    Restaurant restaurant;
     TextView restaurantName;
 
     @Override
@@ -52,17 +53,16 @@ public class RestaurantMainActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        restaurantID = document.getData().get("resId").toString();
-                        System.out.println(restaurantID);
-                        db2.collection("restaurants")
-                                .document(restaurantID)
-                                .get()
-                                .addOnCompleteListener(task2 -> {
-                                    if(task2.isSuccessful()) {
-                                        DocumentSnapshot document2 = task2.getResult();
-                                        restaurantName.setText(document2.getData().get("name").toString());
-                                    }
-                                });
+                        String restaurantID = document.getData().get("resId").toString();
+                        Restaurant.makeFromId(restaurantID, res -> {
+                            this.restaurant = res;
+                            restaurantName.setText(restaurant.getName());
+                        }, unused -> {
+                            Toast.makeText(this,
+                                    "Failed to get restaurant data",
+                                    Toast.LENGTH_SHORT)
+                                    .show();
+                        });
                     }
 
                 });
@@ -98,7 +98,7 @@ public class RestaurantMainActivity extends AppCompatActivity {
                     } else {
                         //sets the intent of the function: changing the activity
                         Intent intent = new Intent(RestaurantMainActivity.this, RestaurantEditActivity.class);
-                        intent.putExtra("resId", restaurantID);
+                        intent.putExtra("resId", restaurant.getId());
                         //starts the activity associated with the intent
                         startActivity(intent);
                     }
@@ -114,7 +114,7 @@ public class RestaurantMainActivity extends AppCompatActivity {
     public void restaurantTables(View view) {
         //sets the intent of the function: changing the activity
         Intent intent = new Intent(this, RestaurantTablesActivity.class);
-        intent.putExtra("id", restaurantID);
+        intent.putExtra("id", restaurant.getId());
         //starts the activity associated with the intent
         startActivity(intent);
     }

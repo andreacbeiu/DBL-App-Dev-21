@@ -3,34 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout-w1240dp/activity_registration.xml" value="0.1765625" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout-w936dp/activity_registration.xml" value="0.17890625" />
         <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/account_reservation_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_account.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_add_account.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_customer_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_edit_restaurant.xml" value="0.2175925925925926" />
         <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_main.xml" value="0.2175925925925926" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_registration.xml" value="0.4" />
         <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_restaurant_account.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_restaurant_account_management.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_restaurant_edit.xml" value="0.4" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_restaurant_list.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_restaurant_login.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_restaurant_main.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_search_page.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_view_pdf.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/activity_view_restaurant.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/coming_soon.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/dialogbooklayout.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/dialogtimepicklayout.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/list_account_items.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/reservation_list_item.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/restaurant_edit_reward.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/restaurant_list_item.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/restaurant_tables_activity.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/layout/table_list_item.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/20201082/Desktop/DBL-App-Dev-21/app/src/main/res/menu/search_menu.xml" value="0.19581017528858485" />
       </map>
     </option>
   </component>

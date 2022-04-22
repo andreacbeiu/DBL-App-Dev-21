@@ -72,7 +72,7 @@ public class RestaurantListActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         RecyclerView rvRestaurants = findViewById(R.id.rvRestaurants);
 
-        RestaurantListAdapter rvRestaurantsAdapter = new RestaurantListAdapter(db);
+        RestaurantListAdapter rvRestaurantsAdapter = new RestaurantListAdapter(db); //Sets up the recycler view
         rvRestaurants.setAdapter(rvRestaurantsAdapter);
         rvRestaurants.setLayoutManager(new LinearLayoutManager(this));
 
@@ -82,6 +82,7 @@ public class RestaurantListActivity extends AppCompatActivity {
         locationRequest.setFastestInterval(2000);
 
         rvRestaurants.addOnItemTouchListener(new RecyclerTouchListener(this, rvRestaurants, new RecyclerTouchListener.ClickListener() {
+            //Let user go to restaurant page on tap
             @Override
             public void onClick(View view, int position) {
                 //changes activity to a different one
@@ -292,7 +293,7 @@ public class RestaurantListActivity extends AppCompatActivity {
                                 if (distanceInM <= radiusInM) {
 
                                     Restaurant tempRestaurant = new Restaurant(document.getId(), document.getData().get("name").toString(),
-                                  document.getData().get("description").toString(), ((Double) document.getData().get("rating")).floatValue(), tables);
+                                  document.getData().get("description").toString(), ((Double) document.getData().get("rating")).longValue(), tables);
                                   restaurants.add(tempRestaurant);
                                 }
                             }

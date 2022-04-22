@@ -70,7 +70,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
                             }
 
                             Restaurant tempRestaurant = new Restaurant(document.getId(), document.getData().get("name").toString(),
-                                    document.getData().get("description").toString(), ((Double) document.getData().get("rating")).floatValue(), tables);
+                                    document.getData().get("description").toString(), ((Double) document.getData().get("rating")).longValue(), tables);
                             restaurants.add(tempRestaurant);
                         }
                         this.notifyDataSetChanged();
