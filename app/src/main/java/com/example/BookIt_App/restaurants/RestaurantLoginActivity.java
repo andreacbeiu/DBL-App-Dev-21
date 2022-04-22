@@ -82,18 +82,21 @@ public class RestaurantLoginActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
 
+        //email cannot be empty
         if (email.isEmpty()) {
             editTextEmail.setError("Email Cannot Be Empty");
             editTextEmail.requestFocus();
             return;
         }
 
+        //password cannot be empty
         if (password.isEmpty()) {
             editTextPassword.setError("Password Cannot Be Empty");
             editTextPassword.requestFocus();
             return;
         }
 
+        //creating a query to check that not any customer accounts are not being used
         CollectionReference users = db.collection("restaurant_users");
 
         Query ref = users.whereIn("type", Arrays.asList("customer"));
@@ -101,22 +104,24 @@ public class RestaurantLoginActivity extends AppCompatActivity {
         ref.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                String email_check = "";
+                String emailCheck = "";
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
 
-                        String email_id = document.getString("name");
+                        String emailId = document.getString("name");
 
-                        if (email_id.equals(email)) {
-                            email_check = email_id;
-                            Log.d("BookIt", document.getId() + " => " + document.getData() + email_check);
+                        if (emailId.equals(email)) {
+                            emailCheck = emailId;
+                            Log.d("BookIt", document.getId() + " => " + document.getData() + emailCheck);
                         }
                     }
 
-                    if (email.equals(email_check)) {
+                    //checking if the email is not related to any customer emails
+                    if (email.equals(emailCheck)) {
                         Log.d("BookIt", "if statement reached");
                         Toast.makeText(RestaurantLoginActivity.this, "Cannot login with customer account", Toast.LENGTH_SHORT).show();
                     } else {
+                        //check credentials inside the authentication and then login
                         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {

@@ -38,6 +38,8 @@ public class RestaurantAccountAdapter extends RecyclerView.Adapter<RestaurantAcc
     private FirebaseAuth mAuth;
     private FirebaseUser user;
 
+    //creating a class inside a class to display each user as its own viewholder object
+
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
         private TextView name, email;
@@ -54,7 +56,7 @@ public class RestaurantAccountAdapter extends RecyclerView.Adapter<RestaurantAcc
             imageButton = (ImageButton) itemView.findViewById(R.id.imageButton);
             imageButton.setOnClickListener(this);
         }
-
+        //getter returns the view id
         public TextView getNameTv() {
             return name;
         }
@@ -81,7 +83,11 @@ public class RestaurantAccountAdapter extends RecyclerView.Adapter<RestaurantAcc
             db = FirebaseFirestore.getInstance();
 
             switch (menuItem.getItemId()) {
+                //currently this option is not fully implemeted, thus users cannot edit accounts
+                //even with right access level
                 case R.id.edit:
+                    //checking through a query if the access level of the current user is high enough
+                    //to edit accounts
                     CollectionReference users = db.collection("users");
 
                     Query ref = users.whereIn("type", Arrays.asList("employee"));
@@ -91,19 +97,19 @@ public class RestaurantAccountAdapter extends RecyclerView.Adapter<RestaurantAcc
                     ref.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            String email_check = "";
+                            String emailCheck = "";
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
 
                                     String email_id = document.getString("name");
 
                                     if (email_id.equals(email)) {
-                                        email_check = email_id;
-                                        Log.d("BookIt", document.getId() + " => " + document.getData() + email_check);
+                                        emailCheck = email_id;
+                                        Log.d("BookIt", document.getId() + " => " + document.getData() + emailCheck);
                                     }
                                 }
 
-                                if (email.equals(email_check)) {
+                                if (email.equals(emailCheck)) {
                                     Log.d("BookIt", "if statement reached");
 //                                    Toast.makeText(RestaurantAccountManagement.class, "Cannot use this feature with employee account", Toast.LENGTH_SHORT).show();
                                 } else {
@@ -116,6 +122,7 @@ public class RestaurantAccountAdapter extends RecyclerView.Adapter<RestaurantAcc
                     });
                     return true;
                 case R.id.delete:
+                    //user a temporary list to store users
                     List<User> tempList = new ArrayList<>();
 
                     mAuth = FirebaseAuth.getInstance();
@@ -129,16 +136,20 @@ public class RestaurantAccountAdapter extends RecyclerView.Adapter<RestaurantAcc
                         if (task1.isSuccessful()) {
 
                             for (QueryDocumentSnapshot document2 : task1.getResult()) {
+
+                                //get the right information regarding the user using a query
                                 String name = document2.getString("name");
-                                String email_id = document2.getString("email");
+                                String emailId = document2.getString("email");
                                 String type = document2.getString("type");
 
-                                User tempUser = new User(name, email_id, type);
+                                User tempUser = new User(name, emailId, type);
                                 tempList.add(tempUser);
                             }
 
                             User discUser = null;
                             discUser = tempList.get(getAdapterPosition());
+
+                            //delete user from the database with the right id
 
                             db.collection("employees").document(discUser.getEmail())
                                     .delete()
@@ -188,11 +199,14 @@ public class RestaurantAccountAdapter extends RecyclerView.Adapter<RestaurantAcc
                             if (task1.isSuccessful()) {
 
                                 for (QueryDocumentSnapshot document2 : task1.getResult()) {
+                                    //getting the details of the user and making a user object with it
                                     String name = document2.getString("name");
-                                    String email_id = document2.getString("email");
+                                    String emailId = document2.getString("email");
                                     String type = document2.getString("type");
 
-                                    User tempUser = new User(name, email_id, type);
+                                    //creating a user object to store in the array in
+
+                                    User tempUser = new User(name, emailId, type);
                                     tempList.add(tempUser);
                                 }
 

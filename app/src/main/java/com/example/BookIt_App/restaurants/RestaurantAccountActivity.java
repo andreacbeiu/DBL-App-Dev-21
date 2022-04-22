@@ -33,6 +33,9 @@ public class RestaurantAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_account);
 
+
+
+        //initiate firebase authentication token
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         UsersEmail = (TextView) findViewById(R.id.tvRestUserEmail);
@@ -42,7 +45,10 @@ public class RestaurantAccountActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+
+        //getting current user object
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        //making robust
         if (currentUser == null) {
             UsersEmail.setText("You are not signed in!");
 
@@ -60,6 +66,7 @@ public class RestaurantAccountActivity extends AppCompatActivity {
     }
 
     public void deleteAccount(View view) {
+        //firebase standard method to delete an account from database
         user.delete()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -75,6 +82,7 @@ public class RestaurantAccountActivity extends AppCompatActivity {
     //Handles actions in the topbar menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        //using switchase to show the different options associated with each account
         switch(item.getItemId()) {
             case R.id.account:
                 Toast.makeText(getApplicationContext(),"You are already viewing your account!",Toast.LENGTH_LONG).show();

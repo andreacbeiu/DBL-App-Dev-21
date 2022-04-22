@@ -24,7 +24,6 @@ public class RestaurantAccountManagement extends AppCompatActivity {
     FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private RecyclerView recyclerView;
-    private List<String> listEmails;
 
 
     @Override
@@ -32,10 +31,13 @@ public class RestaurantAccountManagement extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_account_management);
 
+
         db = FirebaseFirestore.getInstance();
 
         recyclerView = (RecyclerView) findViewById(R.id.listView);
 
+
+        //similar to the other recyclerview activity
         RestaurantAccountAdapter adapter = new RestaurantAccountAdapter(db);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);

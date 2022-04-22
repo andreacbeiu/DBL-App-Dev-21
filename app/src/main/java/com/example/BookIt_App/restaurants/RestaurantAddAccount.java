@@ -28,7 +28,6 @@ import java.util.Map;
 public class RestaurantAddAccount extends AppCompatActivity {
 
     private EditText editTextEmail, editTextPass, editTextName;
-    private Button button;
 
     private FirebaseUser user;
     FirebaseAuth mAuth;
@@ -40,11 +39,15 @@ public class RestaurantAddAccount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_account);
 
+        //creating variable names for each xml unit
+
         editTextEmail = (EditText) findViewById(R.id.emailacc);
         editTextPass = (EditText) findViewById(R.id.passacc);
         editTextName = (EditText) findViewById(R.id.nameacc);
 
 
+
+        //initializing databases and firebase authentication, also getting current user
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
@@ -54,15 +57,23 @@ public class RestaurantAddAccount extends AppCompatActivity {
 
     public void accountAdd(View view) {
 
+        /*
+        * similar to registering an account, we first add the account to the database
+        * then the account is added to authentication */
+
         String email = editTextEmail.getText().toString();
         String password = editTextPass.getText().toString();
         String name = editTextName.getText().toString();
 
 
+        //creating an user hashmap with the relevant information
+
         Map<String, Object> user_acc = new HashMap<>();
         user_acc.put("name", name);
         user_acc.put("password", password);
         user_acc.put("email", email);
+
+        //adding the user to the users database
 
         db.collection("users")
                 .document(user.getUid().toString())
@@ -72,12 +83,15 @@ public class RestaurantAddAccount extends AppCompatActivity {
                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                restaurantID = task.getResult().getString("resId");
                                                user_acc.put("resId", restaurantID);
+
+                                               //adding the user to the employees database, since the account added manually is always an employee
                                                db.collection("employees").document(email).set(user_acc).addOnCompleteListener(task1 -> {
                                                    if (task1.isSuccessful()) {
                                                        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                                            @Override
                                                            public void onComplete(@NonNull Task<AuthResult> task) {
                                                                if (task.isSuccessful()) {
+                                                                   //creating a manager account entails that a new restaurant also be created alongside the manager
                                                                    Map<String, Object> user = new HashMap<>();
                                                                    user.put("name", name);
                                                                    user.put("resId", restaurantID);
@@ -85,6 +99,8 @@ public class RestaurantAddAccount extends AppCompatActivity {
                                                                    user.put("phone", "");
                                                                    user.put("address", "");
                                                                    user.put("type", "employee");
+
+                                                                   //adding to the user database as well
                                                                    db.collection("users")
                                                                            .document(task.getResult().getUser().getUid())
                                                                            .set(user)
